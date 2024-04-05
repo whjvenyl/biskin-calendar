@@ -25,12 +25,6 @@ npm install @biskin-style/calendar
 import "@biskin-style/calendar";
 ```
 
-### Via CDN
-
-```html
-<script type="module" src="https://unpkg.com/cally"></script>
-```
-
 ### Using the components
 
 ```html
