@@ -1,0 +1,70 @@
+---
+import LogoJira from './LogoJira.astro';
+import LogoGitLabColored from "./LogoGitLabColored.astro";
+---
+
+<nav>
+  <ul>
+    <li>
+      <a href="https://github.com/WickyNilliams/cally">
+        <LogoGitLabColored role="presentation" />
+        <span>Gitlab</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://jira.fenaco.com/projects/BSK/issues">
+        <LogoJira role="presentation" />
+        <span>Jira</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    gap: var(--space-s);
+    list-style: none;
+    margin: 0;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  nav {
+    --icon-size: var(--space-s);
+    --icon-color: var(--color-body);
+  }
+
+  nav :global(svg) {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    fill: var(--icon-color);
+
+    /* fix alignment */
+    margin-block-start: 1px;
+  }
+
+  nav :global(a) {
+    display: flex;
+    gap: var(--space-3xs);
+    align-items: center;
+    line-height: 1;
+    text-decoration: none;
+
+    &:focus-visible {
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 440px) {
+      &:not(:focus-visible) {
+        span {
+          position: absolute;
+          transform: scale(0);
+        }
+      }
+    }
+  }
+</style>

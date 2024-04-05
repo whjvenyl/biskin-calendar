@@ -1,6 +1,15 @@
-node_modules
-dist
+.DS_Store
 types
 lib
+dist
+node_modules
 .vscode
 .idea
+
+# lockfile
+bun.lockb
+package-lock.json
+
+# Gitlab Deployment
+.vercel/
+.env*.local

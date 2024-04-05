@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@biskin-style/calendar Module - Development</title>
+
+    <script async type="module" src="./src/index.ts"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+      }
+
+      .grid {
+        display: flex;
+        gap: 1em;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>range</h2>
+    <div aria-live="polite" aria-atomic="true" id="output"></div>
+    <calendar-range
+      id="range"
+      months="3"
+      min="2024-02-10"
+      max="2025-10-10"
+      value="2024-02-12/2025-02-20"
+    >
+      <div class="grid">
+        <calendar-month></calendar-month>
+        <calendar-month offset="1"></calendar-month>
+        <calendar-month offset="2"></calendar-month>
+      </div>
+    </calendar-range>
+
+    <h2>date</h2>
+
+    <calendar-date months="3" value="2024-02-12" id="date">
+      <div class="grid">
+        <calendar-month></calendar-month>
+        <calendar-month offset="1"></calendar-month>
+        <calendar-month offset="2"></calendar-month>
+      </div>
+    </calendar-date>
+
+    <calendar-date value="2020-01-01" id="date2">
+      <calendar-month></calendar-month>
+    </calendar-date>
+
+    <script>
+      const output = document.getElementById("output");
+
+      if (window.range) {
+        let start = null;
+        const formatter = new Intl.DateTimeFormat("en", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        window.range.addEventListener("rangestart", (e) => {
+          const { detail } = e;
+          start = detail;
+          output.textContent = `Start of range selected. Please select another date.`;
+        });
+
+        window.range.addEventListener("rangeend", (e) => {
+          const { detail } = e;
+          output.textContent = `Range selected: ${formatter.formatRange(start, detail)}`;
+        });
+      }
+    </script>
+  </body>
+</html>
