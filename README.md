@@ -34,10 +34,6 @@ import "@biskin-style/calendar";
 </calendar-range>
 ```
 
-## Docs
-
-For full documentation, visit: https://wicky.nillia.ms/cally/
-
 ## License
 
 MIT
