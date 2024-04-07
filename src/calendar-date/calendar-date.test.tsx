@@ -23,6 +23,7 @@ type TestProps = {
   max: string;
   children?: VNodeAny;
   showOutsideDays?: boolean;
+  showWeekNumbers?: boolean;
 };
 
 function Fixture({ children, ...props }: Partial<TestProps>): VNodeAny {

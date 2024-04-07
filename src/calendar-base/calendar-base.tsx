@@ -90,6 +90,10 @@ export const props = {
     type: Boolean,
     value: (): boolean => false,
   },
+  showWeekNumbers: {
+    type: Boolean,
+    value: (): boolean => false,
+  },
   locale: {
     type: String,
     value: (): string | undefined => undefined,

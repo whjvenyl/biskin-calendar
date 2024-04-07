@@ -10,6 +10,7 @@ interface CalendarMonthContextBase {
   isDateDisallowed?: (date: Date) => boolean;
   dateWindow: DateWindow;
   showOutsideDays?: boolean;
+  showWeekNumbers?: boolean;
   locale?: string;
 }
 

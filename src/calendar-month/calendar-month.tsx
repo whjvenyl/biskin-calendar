@@ -28,6 +28,7 @@ export const CalendarMonth = c(
         <table ref={table} aria-labelledby="heading" part="table">
           <thead>
             <tr part="tr head">
+              {context.showWeekNumbers && (<th scope="col">{/* empty */}</th>)}
               {calendar.dayNamesLong.map((dayName, i) => (
                 <th part="th" scope="col">
                   <span class="vh">{dayName}</span>
@@ -40,6 +41,7 @@ export const CalendarMonth = c(
           <tbody>
             {calendar.weeks.map((week, i) => (
               <tr key={i} part="tr week">
+                {context.showWeekNumbers && (<td>WK</td>)}
                 {week.map((date, j) => {
                   const withinMonth = calendar.yearMonth.equals(date);
                   const showDay = context.showOutsideDays || withinMonth;
