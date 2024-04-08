@@ -36,7 +36,7 @@
     "postversion": "git push origin main --tags && npm publish"
   },
   "dependencies": {
-    "atomico": "^1.76.1"
+    "atomico": "1.77.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.5.9",
