@@ -14,6 +14,7 @@ interface CalendarMonthContextBase {
   locale?: string;
   disableNavigation?: boolean;
   formatWeekNumbers?: (weekNumber: number) => string;
+  readonly?: boolean;
 }
 
 export interface CalendarDateContext extends CalendarMonthContextBase {

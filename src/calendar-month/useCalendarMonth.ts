@@ -148,7 +148,7 @@ export function useCalendarMonth({ props, context }: UseCalendarMonthOptions) {
       "aria-label": dayFormatter.format(asDate),
       onkeydown: onKeyDown,
       onclick() {
-        if (!isDisallowed) {
+        if (!isDisallowed && !context.readonly) {
           dispatchSelectDay(date);
         }
         focusDay(date);

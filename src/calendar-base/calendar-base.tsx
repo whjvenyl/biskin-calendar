@@ -74,6 +74,10 @@ export const props = {
     type: String,
     value: "",
   },
+  readonly: {
+    type: Boolean,
+    value: (): boolean => false,
+  },
   min: {
     type: String,
     value: "",
