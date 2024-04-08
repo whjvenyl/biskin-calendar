@@ -31,7 +31,7 @@ export const CalendarMonth = c(
             <tr part="tr head">
               {context.showWeekNumbers && (
                   <th part="th" scope="col">
-                    <span class="vh" aria-hidden="true"></span>
+                    <span class="vh" aria-hidden="true" />
                   </th>
               )}
               {calendar.dayNamesLong.map((dayName, i) => (

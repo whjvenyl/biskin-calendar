@@ -32,25 +32,29 @@ export function CalendarBase(props: CalendarDateProps | CalendarRangeProps) {
       </div>
 
       <div class="header" part="header">
-        <button
-          part={`button previous ${props.previous ? "" : "disabled"}`}
-          onclick={props.previous}
-          aria-disabled={props.previous ? null : "true"}
-        >
-          <slot name="previous">Previous</slot>
-        </button>
+        {props.disableNavigation ? null : (
+          <button
+            part={`button previous ${props.previous ? "" : "disabled"}`}
+            onclick={props.previous}
+            aria-disabled={props.previous ? null : "true"}
+          >
+            <slot name="previous">Previous</slot>
+          </button>
+        )}
 
         <div id="heading" part="heading" aria-hidden="true">
           {props.format.formatRange(start, end)}
         </div>
 
-        <button
-          part={`button next ${props.next ? "" : "disabled"}`}
-          onclick={props.next}
-          aria-disabled={props.next ? null : "true"}
-        >
-          <slot name="next">Next</slot>
-        </button>
+        {props.disableNavigation ? null : (
+          <button
+            part={`button next ${props.next ? "" : "disabled"}`}
+            onclick={props.next}
+            aria-disabled={props.next ? null : "true"}
+          >
+            <slot name="next">Next</slot>
+          </button>
+        )}
       </div>
 
       <CalendarMonthContext
@@ -102,6 +106,10 @@ export const props = {
     type: Number,
     value: 1,
   },
+  disableNavigation: {
+    type: Boolean,
+    value: (): boolean => false,
+  }
 };
 
 export const styles = [
@@ -128,6 +136,7 @@ export const styles = [
     #heading {
       font-weight: bold;
       font-size: 1.25em;
+      margin: auto;
     }
 
     button {

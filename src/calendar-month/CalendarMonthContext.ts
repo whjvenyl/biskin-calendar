@@ -12,6 +12,7 @@ interface CalendarMonthContextBase {
   showOutsideDays?: boolean;
   showWeekNumbers?: boolean;
   locale?: string;
+  disableNavigation?: boolean;
 }
 
 export interface CalendarDateContext extends CalendarMonthContextBase {
