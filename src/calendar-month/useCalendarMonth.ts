@@ -135,6 +135,7 @@ export function useCalendarMonth({ props, context }: UseCalendarMonthOptions) {
         selected: isInMonth && isSelected,
         today: isToday,
         disallowed: isDisallowed,
+        disabled: isDisabled,
         outside: !isInMonth,
         "range-start": isRangeStart,
         "range-end": isRangeEnd,
