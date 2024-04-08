@@ -115,7 +115,7 @@ export function useCalendarMonth({ props, context }: UseCalendarMonthOptions) {
     let isRangeStart = false;
     let isRangeEnd = false;
 
-    // range
+    /* range */
     if ("highlightedRange" in context) {
       const [start, end] = context.highlightedRange;
       isRange = true;
@@ -123,11 +123,11 @@ export function useCalendarMonth({ props, context }: UseCalendarMonthOptions) {
       isRangeEnd = end?.equals(date) ?? false;
       isSelected = start && end ? inRange(date, start, end) : false;
     }
-    // multiple dates
+    /* multiple dates */
     else if ("selectedDates" in context) {
       isSelected = context.selectedDates?.some((d) => d.equals(date)) ?? false;
     }
-    // date
+    /* date */
     else if ("value" in context) {
       isSelected = context.value?.equals(date) ?? false;
     }

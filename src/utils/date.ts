@@ -24,26 +24,24 @@ export function getWeekNumber(date: PlainDate): number {
   const d = date.toDate();
   const day = d.getUTCDay();
 
-  // ISO week date weeks start on Monday, so correct the day number
+  /* ISO week date weeks start on Monday, so correct the day number */
   const dayNum = (day + 6) % 7;
 
-  // Set the target to the nearest Thursday (current date + 4 - current day number)
+  /* Set the target to the nearest Thursday (current date + 4 - current day number) */
   d.setDate(d.getDate() - dayNum + 3);
 
-  // ISO 8601 week number of the year for this date
+  /* ISO 8601 week number of the year for this date */
   const firstThursday = d.valueOf();
 
-  // Set the target to the first day of the year
-  // First set the target to January 1st
+  /* Set the target to the first day of the year - First set the target to January 1st */
   d.setMonth(0, 1);
 
-  // If this is not a Thursday, set the target to the next Thursday
+  /* If this is not a Thursday, set the target to the next Thursday */
   if (d.getDay() !== 4) {
     d.setMonth(0, 1 + ((4 - d.getDay()) + 7) % 7);
   }
 
-  // The weeknumber is the number of weeks between the first Thursday of the year
-  // and the Thursday in the target week
+  /* The weeknumber is the number of weeks between the first Thursday of the year and the Thursday in the target week */
   return 1 + Math.ceil((firstThursday - d.valueOf()) / MILLISECONDS_IN_WEEK);
 }
 

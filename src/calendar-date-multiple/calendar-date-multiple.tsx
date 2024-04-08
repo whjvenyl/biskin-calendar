@@ -1,6 +1,6 @@
 import { c, useEffect, type Host } from 'atomico';
 import { PlainDate } from '../utils/temporal.js';
-import { useDateMultipleProp, useDateProp, useDateRangeProp } from '../utils/hooks.js';
+import { useDateMultipleProp } from '../utils/hooks.js';
 import { CalendarBase, styles, props } from '../calendar-base/calendar-base.js';
 import { useCalendarBase } from '../calendar-base/useCalendarBase.js';
 
@@ -12,10 +12,10 @@ export const CalendarDateMultiple = c(
     function handleSelect(e: CustomEvent<PlainDate>) {
       const selectedDate = e.detail;
       if (value?.some(date => date.equals(selectedDate))) {
-        // Remove the date from the selectedDates array
+        /* Remove the date from the selectedDates array */
         setValue(value.filter(date => !date.equals(selectedDate)));
       } else {
-        // Add the date to the selectedDates array and sort them
+        /* Add the date to the selectedDates array and sort them */
         const newValue = [...(value || []), selectedDate];
         newValue.sort(PlainDate.compare);
         setValue(newValue);

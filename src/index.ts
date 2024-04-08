@@ -4,6 +4,8 @@ import { CalendarRange } from './calendar-range/calendar-range';
 import { CalendarDateMultiple } from './calendar-date-multiple/calendar-date-multiple';
 export { CalendarMonth, CalendarDate, CalendarRange, CalendarDateMultiple };
 
+export { PlainDate } from './utils/temporal';
+
 import type { AtomicoThis } from 'atomico/types/dom.js';
 
 type Simplify<T> = {
