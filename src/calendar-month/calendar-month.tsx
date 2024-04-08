@@ -30,7 +30,7 @@ export const CalendarMonth = c(
           <thead>
             <tr part="tr head">
               {context.showWeekNumbers && (
-                  <th part="th wk" scope="col">
+                  <th part="th" scope="col">
                     <span class="vh" aria-hidden="true"></span>
                   </th>
               )}
@@ -46,7 +46,7 @@ export const CalendarMonth = c(
           <tbody>
             {calendar.weeks.map((week, i) => (
               <tr key={i} part="tr week">
-                {context.showWeekNumbers && week[0] && (<td part="td wk">{getWeekNumber(week[0])}</td>)}
+                {context.showWeekNumbers && week[0] && (<td part="td weeknumber">{getWeekNumber(week[0])}</td>)}
                 {week.map((date, j) => {
                   const withinMonth = calendar.yearMonth.equals(date);
                   const showDay = context.showOutsideDays || withinMonth;

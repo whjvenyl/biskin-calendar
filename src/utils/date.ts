@@ -18,16 +18,33 @@ export function startOfWeek(
   return PlainDate.from(d);
 }
 
-export function getWeekNumber(date: PlainDate, firstDayOfWeek: DaysOfWeek = 0): number {
-  // Copy date so don't modify original
-  const newDate = date.toDate();
-  // Adjust the start day
-  newDate.setUTCDate(newDate.getUTCDate() + 4 - ((newDate.getUTCDay() + 6 + firstDayOfWeek) % 7));
-  // Set to nearest Thursday: current date + 4 - current day number. Make Sunday's day number 7
-  const yearStart = new Date(Date.UTC(newDate.getUTCFullYear(), 0, 1));
-  // Get first day of year
-  // Calculate full weeks to nearest Thursday
-  return Math.ceil(((newDate.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+export function getWeekNumber(date: PlainDate): number {
+  const MILLISECONDS_IN_WEEK = 604800000
+
+  const d = date.toDate();
+  const day = d.getUTCDay();
+
+  // ISO week date weeks start on Monday, so correct the day number
+  const dayNum = (day + 6) % 7;
+
+  // Set the target to the nearest Thursday (current date + 4 - current day number)
+  d.setDate(d.getDate() - dayNum + 3);
+
+  // ISO 8601 week number of the year for this date
+  const firstThursday = d.valueOf();
+
+  // Set the target to the first day of the year
+  // First set the target to January 1st
+  d.setMonth(0, 1);
+
+  // If this is not a Thursday, set the target to the next Thursday
+  if (d.getDay() !== 4) {
+    d.setMonth(0, 1 + ((4 - d.getDay()) + 7) % 7);
+  }
+
+  // The weeknumber is the number of weeks between the first Thursday of the year
+  // and the Thursday in the target week
+  return 1 + Math.ceil((firstThursday - d.valueOf()) / MILLISECONDS_IN_WEEK);
 }
 
 export function endOfWeek(
