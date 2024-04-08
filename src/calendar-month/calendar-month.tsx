@@ -1,4 +1,5 @@
 import { c, css, useContext, useRef, type Host } from "atomico";
+import {getWeekNumber} from '../utils/date';
 import { reset, vh } from "../utils/styles.js";
 import { useCalendarMonth } from "./useCalendarMonth.js";
 import { CalendarMonthContext } from "./CalendarMonthContext.js";
@@ -28,7 +29,11 @@ export const CalendarMonth = c(
         <table ref={table} aria-labelledby="heading" part="table">
           <thead>
             <tr part="tr head">
-              {context.showWeekNumbers && (<th scope="col">{/* empty */}</th>)}
+              {context.showWeekNumbers && (
+                  <th part="th wk" scope="col">
+                    <span class="vh" aria-hidden="true"></span>
+                  </th>
+              )}
               {calendar.dayNamesLong.map((dayName, i) => (
                 <th part="th" scope="col">
                   <span class="vh">{dayName}</span>
@@ -41,7 +46,7 @@ export const CalendarMonth = c(
           <tbody>
             {calendar.weeks.map((week, i) => (
               <tr key={i} part="tr week">
-                {context.showWeekNumbers && (<td>WK</td>)}
+                {context.showWeekNumbers && week[0] && (<td part="td wk">{getWeekNumber(week[0])}</td>)}
                 {week.map((date, j) => {
                   const withinMonth = calendar.yearMonth.equals(date);
                   const showDay = context.showOutsideDays || withinMonth;
@@ -98,11 +103,13 @@ export const CalendarMonth = c(
         th {
           font-weight: bold;
           block-size: 2.25rem;
+          min-width: 36px;
         }
 
         td {
           padding-inline: 0;
           padding-block: 1px;
+          min-width: 36px;
         }
 
         button {

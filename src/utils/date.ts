@@ -18,6 +18,18 @@ export function startOfWeek(
   return PlainDate.from(d);
 }
 
+export function getWeekNumber(date: PlainDate, firstDayOfWeek: DaysOfWeek = 0): number {
+  // Copy date so don't modify original
+  const newDate = date.toDate();
+  // Adjust the start day
+  newDate.setUTCDate(newDate.getUTCDate() + 4 - ((newDate.getUTCDay() + 6 + firstDayOfWeek) % 7));
+  // Set to nearest Thursday: current date + 4 - current day number. Make Sunday's day number 7
+  const yearStart = new Date(Date.UTC(newDate.getUTCFullYear(), 0, 1));
+  // Get first day of year
+  // Calculate full weeks to nearest Thursday
+  return Math.ceil(((newDate.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+}
+
 export function endOfWeek(
   date: PlainDate,
   firstDayOfWeek: DaysOfWeek = 0
