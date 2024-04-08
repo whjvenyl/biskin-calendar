@@ -21,12 +21,17 @@ export interface CalendarDateContext extends CalendarMonthContextBase {
   value?: PlainDate;
 }
 
+export interface CalendarDateMultipleContext extends CalendarMonthContextBase {
+  selectedDates?: PlainDate[];
+}
+
 export interface CalendarRangeContext extends CalendarMonthContextBase {
   highlightedRange: [PlainDate, PlainDate] | [];
 }
 
 export type CalendarMonthContextValue =
   | CalendarDateContext
+  | CalendarDateMultipleContext
   | CalendarRangeContext;
 
 const t = today();

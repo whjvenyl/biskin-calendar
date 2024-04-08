@@ -3,6 +3,7 @@ import {
   CalendarMonthContext,
   type CalendarDateContext,
   type CalendarRangeContext,
+  type CalendarDateMultipleContext,
 } from "../calendar-month/CalendarMonthContext.js";
 import { reset, vh } from "../utils/styles.js";
 import type { DaysOfWeek } from "../utils/date.js";
@@ -20,8 +21,9 @@ interface CalendarBaseProps {
 
 interface CalendarRangeProps extends CalendarBaseProps, CalendarRangeContext {}
 interface CalendarDateProps extends CalendarBaseProps, CalendarDateContext {}
+interface CalendarDateMultipleProps extends CalendarBaseProps, CalendarDateMultipleContext {}
 
-export function CalendarBase(props: CalendarDateProps | CalendarRangeProps) {
+export function CalendarBase(props: CalendarDateProps | CalendarRangeProps | CalendarDateMultipleProps) {
   const start = props.dateWindow.start.toDate();
   const end = props.dateWindow.end.toDate();
 

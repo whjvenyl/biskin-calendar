@@ -46,7 +46,11 @@ export const CalendarMonth = c(
           <tbody>
             {calendar.weeks.map((week, i) => (
               <tr key={i} part="tr week">
-                {context.showWeekNumbers && week[0] && <td class="weeknumber" part="td weeknumber">{context.formatWeekNumbers(getWeekNumber(week[0]))}</td>}
+                {context.showWeekNumbers && week[0] && (
+                  <td class="weeknumber" part="td weeknumber">
+                    {context.formatWeekNumbers ? context.formatWeekNumbers(getWeekNumber(week[0])) : week[0]}
+                  </td>
+                )}
                 {week.map((date, j) => {
                   const withinMonth = calendar.yearMonth.equals(date);
                   const showDay = context.showOutsideDays || withinMonth;

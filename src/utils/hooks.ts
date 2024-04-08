@@ -1,6 +1,6 @@
 import { useProp, useMemo } from "atomico";
 import { PlainDate, type PlainYearMonth } from "./temporal.js";
-import { type DaysOfWeek } from "./date.js";
+import type { DaysOfWeek } from "./date.js";
 
 function safeFrom<T extends PlainDate | PlainYearMonth>(
   Ctr: { from(value: string): T },
@@ -50,6 +50,15 @@ export function useDateRangeProp(prop: string) {
   return [range, setRange] as const;
 }
 
+export function useDateMultipleProp(prop: string) {
+  const [value, setValue] = useProp<string>(prop);
+
+  const dates = useMemo(() => value ? value.split(",").map((date) => PlainDate.from(date)) : [], [value]);
+  const setDates = (dates: PlainDate[]) => setValue(dates.map((date) => date.toString()).join(","));
+
+  return [dates, setDates] as const;
+}
+
 type DateFormatOptions = Pick<
   Intl.DateTimeFormatOptions,
   "year" | "month" | "day" | "weekday"
@@ -77,7 +86,7 @@ export function useDayNames(
     const days = [];
     const day = new Date();
 
-    for (var i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i++) {
       const index = (day.getDay() - firstDayOfWeek + 7) % 7;
       days[index] = formatter.format(day);
       day.setDate(day.getDate() + 1);

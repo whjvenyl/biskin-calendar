@@ -109,10 +109,11 @@ export function inRange(
 function getDaysInRange(start: PlainDate, end: PlainDate): PlainDate[] {
   const duration = { days: 1 };
   const days: PlainDate[] = [start];
+  let current = start;
 
-  while (!start.equals(end)) {
-    start = start.add(duration);
-    days.push(start);
+  while (!current.equals(end)) {
+    current = current.add(duration);
+    days.push(current);
   }
 
   return days;

@@ -1,9 +1,12 @@
-import { CalendarMonth } from "./calendar-month/calendar-month";
-import { CalendarDate } from "./calendar-date/calendar-date";
-import { CalendarRange } from "./calendar-range/calendar-range";
-export { CalendarMonth, CalendarDate, CalendarRange };
+import { CalendarMonth } from './calendar-month/calendar-month';
+import { CalendarDate } from './calendar-date/calendar-date';
+import { CalendarRange } from './calendar-range/calendar-range';
+import { CalendarDateMultiple } from './calendar-date-multiple/calendar-date-multiple';
+export { CalendarMonth, CalendarDate, CalendarRange, CalendarDateMultiple };
 
-import type { AtomicoThis } from "atomico/types/dom.js";
+export { PlainDate } from './utils/temporal';
+
+import type { AtomicoThis } from 'atomico/types/dom.js';
 
 type Simplify<T> = {
   [K in keyof T]: T[K];
@@ -16,4 +19,5 @@ type ComponentProps<T extends abstract new (...args: any) => any> = Simplify<
 // export props for use in react/vue/etc
 export type CalendarMonthProps = ComponentProps<typeof CalendarMonth>;
 export type CalendarDateProps = ComponentProps<typeof CalendarDate>;
+export type CalendarDateMultipleProps = ComponentProps<typeof CalendarDateMultiple>;
 export type CalendarRangeProps = ComponentProps<typeof CalendarRange>;
