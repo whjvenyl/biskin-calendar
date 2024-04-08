@@ -9,25 +9,27 @@ export const CalendarDateMultiple = c(
     const [value, setValue] = useDateMultipleProp('value');
     const calendar = useCalendarBase(props);
 
-    useEffect(() => {
-      if (value.length) {
-        calendar.setFocusedDate(value[value.length - 1]);
-      }
-    }, [value]);
-
     function handleSelect(e: CustomEvent<PlainDate>) {
       const selectedDate = e.detail;
       if (value?.some(date => date.equals(selectedDate))) {
         // Remove the date from the selectedDates array
-        setValue((value.filter(date => !date.equals(selectedDate))));
+        setValue(value.filter(date => !date.equals(selectedDate)));
       } else {
-          // Add the date to the selectedDates array and sort them
-          const newValue = [...(value || []), selectedDate];
-          newValue.sort(PlainDate.compare);
-          setValue(newValue);
+        // Add the date to the selectedDates array and sort them
+        const newValue = [...(value || []), selectedDate];
+        newValue.sort(PlainDate.compare);
+        setValue(newValue);
       }
       calendar.dispatch();
     }
+
+    /*
+     * Instead of setting the focus to the last date in the selectedDates array, we do nothing.
+     * This avoids the strange behavior of the calendar jumping seemingly randomly when selecting or deselecting dates.
+     */
+    useEffect(() => {
+        /* empty */
+    }, [value]);
 
     return (
       <host shadowDom focus={calendar.focus}>
