@@ -24,12 +24,16 @@ export const CalendarDateMultiple = c(
     }
 
     /*
-     * Instead of setting the focus to the last date in the selectedDates array, we do nothing.
+     * Instead of setting the focus to the last date in the selectedDates array, on each value change, we do nothing.
      * This avoids the strange behavior of the calendar jumping seemingly randomly when selecting or deselecting dates.
+     * Instead, we set the focus to the last date in the selectedDates array only when the component mounts.
      */
     useEffect(() => {
-        /* empty */
-    }, [value]);
+        if (value.length) {
+            const lastDate = value[value.length - 1];
+            calendar.setFocusedDate(lastDate!);
+        }
+    }, []);
 
     return (
       <host shadowDom focus={calendar.focus}>
