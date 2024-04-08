@@ -1,6 +1,6 @@
 {
   "name": "@biskin-style/calendar",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "small, feature-rich calendar components",
   "license": "MIT",
   "type": "module",
