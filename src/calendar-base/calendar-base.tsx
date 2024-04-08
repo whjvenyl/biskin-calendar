@@ -98,6 +98,10 @@ export const props = {
     type: Boolean,
     value: (): boolean => false,
   },
+  formatWeekNumbers: {
+    type: Function,
+    value: (weekNumber: number) => `W${weekNumber}`,
+  },
   locale: {
     type: String,
     value: (): string | undefined => undefined,

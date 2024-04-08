@@ -1,8 +1,8 @@
-import { c, css, useContext, useRef, type Host } from "atomico";
-import {getWeekNumber} from '../utils/date';
-import { reset, vh } from "../utils/styles.js";
-import { useCalendarMonth } from "./useCalendarMonth.js";
-import { CalendarMonthContext } from "./CalendarMonthContext.js";
+import { c, css, useContext, useRef, type Host } from 'atomico';
+import { getWeekNumber } from '../utils/date';
+import { reset, vh } from '../utils/styles.js';
+import { useCalendarMonth } from './useCalendarMonth.js';
+import { CalendarMonthContext } from './CalendarMonthContext.js';
 
 export const CalendarMonth = c(
   (
@@ -30,9 +30,9 @@ export const CalendarMonth = c(
           <thead>
             <tr part="tr head">
               {context.showWeekNumbers && (
-                  <th part="th" scope="col">
-                    <span class="vh" aria-hidden="true" />
-                  </th>
+                <th part="th" scope="col">
+                  <span class="vh" aria-hidden="true" />
+                </th>
               )}
               {calendar.dayNamesLong.map((dayName, i) => (
                 <th part="th" scope="col">
@@ -46,18 +46,14 @@ export const CalendarMonth = c(
           <tbody>
             {calendar.weeks.map((week, i) => (
               <tr key={i} part="tr week">
-                {context.showWeekNumbers && week[0] && (<td part="td weeknumber">{getWeekNumber(week[0])}</td>)}
+                {context.showWeekNumbers && week[0] && <td class="weeknumber" part="td weeknumber">{context.formatWeekNumbers(getWeekNumber(week[0]))}</td>}
                 {week.map((date, j) => {
                   const withinMonth = calendar.yearMonth.equals(date);
                   const showDay = context.showOutsideDays || withinMonth;
 
                   return (
                     <td part="td" key={j}>
-                      {showDay && (
-                        <button {...calendar.getDayProps(date)}>
-                          {date.day}
-                        </button>
-                      )}
+                      {showDay && <button {...calendar.getDayProps(date)}>{date.day}</button>}
                     </td>
                   );
                 })}
@@ -73,8 +69,8 @@ export const CalendarMonth = c(
     props: {
       offset: {
         type: Number,
-        value: 0,
-      },
+        value: 0
+      }
     },
 
     styles: [
@@ -111,6 +107,10 @@ export const CalendarMonth = c(
           padding-block: 1px;
           min-width: 36px;
         }
+        
+        td.weeknumber {
+          font-size: 0.875em;
+        }
 
         button {
           color: inherit;
@@ -143,8 +143,8 @@ export const CalendarMonth = c(
           cursor: default;
           opacity: 0.5;
         }
-      `,
-    ],
+      `
+    ]
   }
 );
-customElements.define("calendar-month", CalendarMonth);
+customElements.define('calendar-month', CalendarMonth);
