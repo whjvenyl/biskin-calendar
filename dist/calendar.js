@@ -124,18 +124,18 @@ function me(e, t, s, n, o) {
     set(i) {
       const d = this[t];
       h && r != Boolean && i == null && (i = h());
-      const { error: b, value: D } = (l ? ge : De)(
+      const { error: p, value: D } = (l ? ge : De)(
         r,
         i
       );
-      if (b && D != null)
+      if (p && D != null)
         throw new jt(
           this,
           `The value defined for prop '${t}' must be of type '${r.name}'`,
           D
         );
       d != D && (this._props[t] = D ?? void 0, this.update(), c && Yt(this, c), this.updated.then(() => {
-        a && (this._ignoreAttr = f, be(this, r, f, this[t]), this._ignoreAttr = null);
+        a && (this._ignoreAttr = f, pe(this, r, f, this[t]), this._ignoreAttr = null);
       }));
     },
     /**
@@ -146,10 +146,10 @@ function me(e, t, s, n, o) {
     }
   }), h && (o[t] = h()), n[f] = { prop: t, type: r };
 }
-const Yt = (e, { type: t, base: s = CustomEvent, ...n }) => e.dispatchEvent(new s(t, n)), ye = (e) => e.replace(/([A-Z])/g, "-$1").toLowerCase(), be = (e, t, s, n) => n == null || t == Boolean && !n ? e.removeAttribute(s) : e.setAttribute(
+const Yt = (e, { type: t, base: s = CustomEvent, ...n }) => e.dispatchEvent(new s(t, n)), ye = (e) => e.replace(/([A-Z])/g, "-$1").toLowerCase(), pe = (e, t, s, n) => n == null || t == Boolean && !n ? e.removeAttribute(s) : e.setAttribute(
   s,
   t?.name === q && t?.serialize ? t?.serialize(n) : I(n) ? JSON.stringify(n) : t == Boolean ? "" : n
-), pe = (e, t) => e == Boolean ? !!he[t] : e == Number ? Number(t) : e == String ? t : e == Array || e == Object ? JSON.parse(t) : e.name == q ? t : (
+), be = (e, t) => e == Boolean ? !!he[t] : e == Number ? Number(t) : e == String ? t : e == Array || e == Object ? JSON.parse(t) : e.name == q ? t : (
   // TODO: If when defining reflect the prop can also be of type string?
   new e(t)
 ), ge = ({ map: e }, t) => {
@@ -205,13 +205,13 @@ const Ee = (e) => {
         this,
         Ee(this)
       );
-      let d, b = !0;
+      let d, p = !0;
       const D = tt(this);
       this.update = () => (d || (d = !0, this.updated = (this.updated || this.mounted).then(() => {
         try {
           const m = i.load(this._render), w = i.cleanEffects();
           return m && //@ts-ignore
-          m.render(this, this.symbolId, D), d = !1, b && !i.isSuspense() && (b = !1, !D && ve(this)), w();
+          m.render(this, this.symbolId, D), d = !1, p && !i.isSuspense() && (p = !1, !D && ve(this)), w();
         } finally {
           d = !1;
         }
@@ -240,13 +240,13 @@ const Ee = (e) => {
       if (s[l]) {
         if (l === this._ignoreAttr || h === i)
           return;
-        const { prop: d, type: b } = s[l];
+        const { prop: d, type: p } = s[l];
         try {
-          this[d] = pe(b, i);
+          this[d] = be(p, i);
         } catch {
           throw new fe(
             this,
-            `The value defined as attr '${l}' cannot be parsed by type '${b.name}'`,
+            `The value defined as attr '${l}' cannot be parsed by type '${p.name}'`,
             i
           );
         }
@@ -476,7 +476,7 @@ function Fe(e, t, s, n, o, r) {
   if (e && Lt(e, (d) => {
     if (typeof d == "object" && !d[U])
       return;
-    const b = d[U] && d.key, D = f && b != null && f.get(b);
+    const p = d[U] && d.key, D = f && p != null && f.get(p);
     i != u && i === D ? h.delete(i) : i = i == u ? u : i.nextSibling;
     const m = f ? D : i;
     let w = m;
@@ -486,7 +486,7 @@ function Fe(e, t, s, n, o, r) {
       const A = d + "";
       !(w instanceof Text) || w instanceof st ? w = new Text(A) : w.data != A && (w.data = A);
     }
-    w != i && (f && h.delete(w), !m || f ? (s.insertBefore(w, i), f && i != u && h.add(i)) : m == u ? s.insertBefore(w, u) : (s.replaceChild(w, m), i = w)), b != null && (l = l || /* @__PURE__ */ new Map(), l.set(b, w));
+    w != i && (f && h.delete(w), !m || f ? (s.insertBefore(w, i), f && i != u && h.add(i)) : m == u ? s.insertBefore(w, u) : (s.replaceChild(w, m), i = w)), p != null && (l = l || /* @__PURE__ */ new Map(), l.set(p, w));
   }), i = i == u ? u : i.nextSibling, t && i != u)
     for (; i != u; ) {
       const d = i;
@@ -828,56 +828,56 @@ function Ve(e) {
 }
 const Mt = (e) => e.target.matches(":dir(ltr)"), tn = { month: "long", day: "numeric" }, en = { month: "long" }, nn = { weekday: "narrow" }, sn = { weekday: "long" }, Q = { bubbles: !0 };
 function on({ props: e, context: t }) {
-  const { offset: s } = e, { firstDayOfWeek: n, isDateDisallowed: o, min: r, max: a, dateWindow: c, locale: u } = t, f = ut(), l = kt(sn, n, u), h = kt(nn, n, u), i = _(tn, u), d = _(en, u), { focusedDate: b } = c, D = C(
+  const { offset: s } = e, { firstDayOfWeek: n, isDateDisallowed: o, min: r, max: a, dateWindow: c, locale: u } = t, f = ut(), l = kt(sn, n, u), h = kt(nn, n, u), i = _(tn, u), d = _(en, u), { focusedDate: p } = c, D = C(
     () => c.start.add({ months: s }),
     [c, s]
   ), m = C(
     () => Je(D, n),
     [D, n]
   ), w = S("focusday", Q), A = S("selectday", Q), te = S("hoverday", Q);
-  function gt(p) {
-    w(B(p, r, a));
+  function gt(b) {
+    w(B(b, r, a));
   }
-  function ee(p) {
+  function ee(b) {
     let E;
-    switch (p.key) {
+    switch (b.key) {
       case "ArrowRight":
-        E = b.add({ days: Mt(p) ? 1 : -1 });
+        E = p.add({ days: Mt(b) ? 1 : -1 });
         break;
       case "ArrowLeft":
-        E = b.add({ days: Mt(p) ? -1 : 1 });
+        E = p.add({ days: Mt(b) ? -1 : 1 });
         break;
       case "ArrowDown":
-        E = b.add({ days: 7 });
+        E = p.add({ days: 7 });
         break;
       case "ArrowUp":
-        E = b.add({ days: -7 });
+        E = p.add({ days: -7 });
         break;
       case "PageUp":
-        E = b.add(p.shiftKey ? { years: -1 } : { months: -1 });
+        E = p.add(b.shiftKey ? { years: -1 } : { months: -1 });
         break;
       case "PageDown":
-        E = b.add(p.shiftKey ? { years: 1 } : { months: 1 });
+        E = p.add(b.shiftKey ? { years: 1 } : { months: 1 });
         break;
       case "Home":
-        E = ft(b, n);
+        E = ft(p, n);
         break;
       case "End":
-        E = Xt(b, n);
+        E = Xt(p, n);
         break;
       default:
         return;
     }
-    gt(E), p.preventDefault();
+    gt(E), b.preventDefault();
   }
-  function ne(p) {
-    const E = D.equals(p), se = p.equals(b), Dt = p.equals(f), wt = p.toDate(), j = o?.(wt), z = !ot(p, r, a);
+  function ne(b) {
+    const E = D.equals(b), se = b.equals(p), Dt = b.equals(f), wt = b.toDate(), j = o?.(wt), z = !ot(b, r, a);
     let P = !1, Et = !1, H = !1, K = !1;
     if ("highlightedRange" in t) {
       const [R, J] = t.highlightedRange;
-      Et = !0, H = R?.equals(p) ?? !1, K = J?.equals(p) ?? !1, P = R && J ? ot(p, R, J) : !1;
+      Et = !0, H = R?.equals(b) ?? !1, K = J?.equals(b) ?? !1, P = R && J ? ot(b, R, J) : !1;
     } else
-      "selectedDates" in t ? P = t.selectedDates?.some((R) => R.equals(p)) ?? !1 : "value" in t && (P = t.value?.equals(p) ?? !1);
+      "selectedDates" in t ? P = t.selectedDates?.some((R) => R.equals(b)) ?? !1 : "value" in t && (P = t.value?.equals(b) ?? !1);
     return {
       part: Ve({
         button: !0,
@@ -899,10 +899,10 @@ function on({ props: e, context: t }) {
       "aria-label": i.format(wt),
       onkeydown: ee,
       onclick() {
-        !j && !t.readonly && A(p), gt(p);
+        !j && !t.readonly && A(b), gt(b);
       },
       onmouseover() {
-        !j && !z && te(p);
+        !j && !z && te(b);
       }
     };
   }
@@ -991,7 +991,7 @@ const rn = x(
     styles: [
       Qt,
       Vt,
-      W`:host{--color-accent: black;--color-text-on-accent: white;display:flex;flex-direction:column;gap:.25rem;text-align:center;inline-size:fit-content}table{border-collapse:collapse;border-spacing:0;table-layout:fixed;inline-size:max-content;font-size:.875rem}th{font-weight:700;block-size:2.25rem;min-width:36px}td{padding-inline:0;padding-block:1px;min-width:36px}td.weeknumber{font-size:.875em}button{color:inherit;font-size:inherit;background:transparent;border:0;cursor:pointer;font-variant-numeric:tabular-nums;block-size:2.25rem;inline-size:2.25rem}button:hover:where(:not(:disabled)){background:#0000000d}button:is([aria-pressed=true],:focus-visible){background:var(--color-accent);color:var(--color-text-on-accent)}button:focus-visible{outline:1px solid var(--color-text-on-accent);outline-offset:-2px}button:disabled,:host::part(outside),:host::part(disallowed){cursor:default;opacity:.5}`
+      W`:host{--color-accent: black;--color-text-on-accent: white;display:flex;flex-direction:column;gap:.25rem;text-align:center;inline-size:fit-content}table{border-collapse:collapse;border-spacing:0;table-layout:fixed;inline-size:max-content;font-size:.875rem}th{font-weight:700;block-size:2.25rem;min-width:36px}td{padding-inline:0;padding-block:1px;min-width:36px}td.weeknumber{font-size:.875em}button{color:inherit;font-size:inherit;background:transparent;border:0;cursor:pointer;font-variant-numeric:tabular-nums;block-size:2.25rem;inline-size:2.25rem}button:hover:where(:not(:disabled)){background:#0000000d}button:is([aria-pressed=true],:focus-visible){background:var(--color-accent);color:var(--color-text-on-accent)}button:focus-visible{outline:1px solid var(--color-text-on-accent);outline-offset:-2px}button:disabled,:host::part(outside),:host::part(disallowed){cursor:default;opacity:.5}:host::part(disallowed){text-decoration:line-through}`
     ]
   }
 );
@@ -1083,12 +1083,12 @@ const yt = {
     type: Boolean,
     value: () => !1
   }
-}, bt = [
+}, pt = [
   Qt,
   Vt,
   W`:host{display:block;inline-size:fit-content}[role=group]{display:flex;flex-direction:column;gap:1em}.header{display:flex;align-items:center;justify-content:space-between}#heading{font-weight:700;font-size:1.25em;margin:auto}button{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:center}button[aria-disabled]{cursor:default;opacity:.4}`
 ], an = { year: "numeric" }, cn = { year: "numeric", month: "long" };
-function pt({ months: e, locale: t }) {
+function bt({ months: e, locale: t }) {
   const [s] = at("min"), [n] = at("max"), o = S("focusday"), r = S("change"), [a, c] = it(() => {
     const m = ut(), w = e === 12 ? new k(m.year, 1) : m.toPlainYearMonth();
     return new T(w, { months: e }, m);
@@ -1103,7 +1103,7 @@ function pt({ months: e, locale: t }) {
   function h() {
     l.current.querySelectorAll("calendar-month").forEach((m) => m.focus());
   }
-  const i = _(an, t), d = _(cn, t), b = n == null || !a.contains(n), D = s == null || !a.contains(s);
+  const i = _(an, t), d = _(cn, t), p = n == null || !a.contains(n), D = s == null || !a.contains(s);
   return {
     format: i,
     formatVerbose: d,
@@ -1115,14 +1115,14 @@ function pt({ months: e, locale: t }) {
     setFocusedDate: f,
     min: s,
     max: n,
-    next: b ? () => u(a.next()) : void 0,
+    next: p ? () => u(a.next()) : void 0,
     previous: D ? () => u(a.prev()) : void 0,
     focus: h
   };
 }
 const ln = x(
   (e) => {
-    const [t, s] = at("value"), n = pt(e);
+    const [t, s] = at("value"), n = bt(e);
     $(() => {
       t && n.setFocusedDate(t);
     }, [t]);
@@ -1140,12 +1140,12 @@ const ln = x(
       }
     ) });
   },
-  { props: yt, styles: bt }
+  { props: yt, styles: pt }
 );
 customElements.define("calendar-date", ln);
 const Ft = (e, t) => g.compare(e, t) < 0 ? [e, t] : [t, e], un = x(
   (e) => {
-    const [t, s] = Ge("value"), n = pt(e), o = S("rangestart"), r = S("rangeend"), [a, c] = it();
+    const [t, s] = Ge("value"), n = bt(e), o = S("rangestart"), r = S("rangeend"), [a, c] = it();
     $(() => {
       t.length && !ot(n.dateWindow.focusedDate, t[0], t[1]) && n.setFocusedDate(t[1]);
     }, [t]);
@@ -1172,12 +1172,12 @@ const Ft = (e, t) => g.compare(e, t) < 0 ? [e, t] : [t, e], un = x(
       }
     ) });
   },
-  { props: yt, styles: bt }
+  { props: yt, styles: pt }
 );
 customElements.define("calendar-range", un);
 const fn = x(
   (e) => {
-    const [t, s] = Qe("value"), n = pt(e);
+    const [t, s] = Qe("value"), n = bt(e);
     function o(r) {
       const a = r.detail;
       if (t?.some((c) => c.equals(a)))
@@ -1204,7 +1204,7 @@ const fn = x(
       }
     ) });
   },
-  { props: yt, styles: bt }
+  { props: yt, styles: pt }
 );
 customElements.define("calendar-date-multiple", fn);
 export {

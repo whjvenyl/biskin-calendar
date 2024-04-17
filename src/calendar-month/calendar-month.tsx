@@ -147,6 +147,10 @@ export const CalendarMonth = c(
           cursor: default;
           opacity: 0.5;
         }
+
+        :host::part(disallowed) {
+          text-decoration: line-through;
+        }
       `
     ]
   }
