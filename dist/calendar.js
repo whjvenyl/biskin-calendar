@@ -35,7 +35,7 @@ let M = globalThis[tt];
 const ee = Symbol.for("Atomico.suspense"), It = Symbol.for("Atomico.effect"), ne = Symbol.for("Atomico.layoutEffect"), Rt = Symbol.for("Atomico.insertionEffect"), A = (e, t, n) => {
   const { i: s, hooks: r } = M.c, o = r[s] = r[s] || {};
   return o.value = e(o.value), o.effect = t, o.tag = n, M.c.i++, r[s].value;
-}, se = (e) => A((t = Ft(e)) => t), U = () => A((e = Ft(M.c.host)) => e), $t = () => M.c.update, oe = (e, t, n = 0) => {
+}, se = (e) => A((t = Ft(e)) => t), L = () => A((e = Ft(M.c.host)) => e), $t = () => M.c.update, oe = (e, t, n = 0) => {
   let s = {}, r = !1;
   const o = () => r, a = (c, u) => {
     for (const d in s) {
@@ -60,7 +60,7 @@ const ee = Symbol.for("Atomico.suspense"), It = Symbol.for("Atomico.effect"), ne
     a(It, c);
   })), isSuspense: o };
 }, F = Symbol.for, re = queueMicrotask;
-function Lt(e, t) {
+function Ut(e, t) {
   const n = e.length;
   if (n !== t.length)
     return !1;
@@ -72,7 +72,7 @@ function Lt(e, t) {
   return !0;
 }
 const N = (e) => typeof e == "function", R = (e) => typeof e == "object", { isArray: ae } = Array, et = (e, t) => (t ? e instanceof HTMLStyleElement : !0) && "hydrate" in (e?.dataset || {});
-function Ut(e, t) {
+function Lt(e, t) {
   let n;
   const s = (r) => {
     let { length: o } = r;
@@ -269,7 +269,7 @@ function ge(e) {
   const { styles: t } = e.constructor, { shadowRoot: n } = e;
   if (n && t.length) {
     const s = [];
-    Ut(t, (r) => {
+    Lt(t, (r) => {
       r && (r instanceof Element ? n.appendChild(r.cloneNode(!0)) : s.push(r));
     }), s.length && (n.adoptedStyleSheets = s);
   }
@@ -280,7 +280,7 @@ const qt = (e) => (t, n) => {
      * Clean the effect hook
      * @type {import("internal/hooks.js").CollectorEffect}
      */
-    ([s, r] = []) => ((r || !r) && (r && Lt(r, n) ? s = s || !0 : (N(s) && s(), s = null)), [s, n]),
+    ([s, r] = []) => ((r || !r) && (r && Ut(r, n) ? s = s || !0 : (N(s) && s(), s = null)), [s, n]),
     /**
      * @returns {any}
      */
@@ -326,10 +326,10 @@ const at = (e) => {
     })) => n
   );
 }, T = (e, t) => {
-  const [n] = A(([s, r, o = 0] = []) => ((!r || r && !Lt(r, t)) && (s = e()), [s, t, o]));
+  const [n] = A(([s, r, o = 0] = []) => ((!r || r && !Ut(r, t)) && (s = e()), [s, t, o]));
   return n;
 }, it = (e) => {
-  const { current: t } = U();
+  const { current: t } = L();
   if (!(e in t))
     throw new xt(
       t,
@@ -342,7 +342,7 @@ const at = (e) => {
     })) => (n[0] = t[e], n)
   );
 }, C = (e, t = {}) => {
-  const n = U();
+  const n = L();
   return n[e] || (n[e] = (s = t.detail) => Bt(n.current, {
     type: e,
     ...t,
@@ -473,7 +473,7 @@ function Pe(e, t, n, s, r, o) {
   let u;
   const d = c && /* @__PURE__ */ new Set();
   let l = f;
-  if (e && Ut(e, (m) => {
+  if (e && Lt(e, (m) => {
     if (typeof m == "object" && !m[$])
       return;
     const p = m[$] && m.key, y = c && p != null && c.get(p);
@@ -565,7 +565,7 @@ function Oe(e) {
   }
 }
 const Ae = Wt("host", { style: "display: contents" }), X = F("atomico/context"), Fe = (e, t) => {
-  const n = U();
+  const n = L();
   De(
     () => _t(
       n.current,
@@ -611,7 +611,7 @@ const Ae = Wt("host", { style: "display: contents" }), X = F("atomico/context"),
   }, [t]), (t || e).value;
 }, $e = (e) => {
   const t = _(
-    () => (Fe(t, U().current), Ae),
+    () => (Fe(t, L().current), Ae),
     {
       props: {
         value: {
@@ -631,7 +631,7 @@ function ut(e, t = 0) {
   const n = v(e), s = n.getUTCDay(), r = (s < t ? 7 : 0) + s - t;
   return n.setUTCDate(n.getUTCDate() - r), E.from(n);
 }
-function Le(e) {
+function Ue(e) {
   const n = v(e), r = (n.getUTCDay() + 6) % 7;
   n.setDate(n.getDate() - r + 3);
   const o = n.valueOf();
@@ -646,14 +646,14 @@ function Xt(e) {
 function z(e, t, n) {
   return t && E.compare(e, t) < 0 ? t : n && E.compare(e, n) > 0 ? n : e;
 }
-const Ue = { days: 1 };
+const Le = { days: 1 };
 function _e(e, t = 0) {
   let n = ut(e.toPlainDate(), t);
   const s = Zt(Xt(e), t), r = [];
   for (; E.compare(n, s) < 0; ) {
     const o = [];
     for (let a = 0; a < 7; a++)
-      o.push(n), n = n.add(Ue);
+      o.push(n), n = n.add(Le);
     r.push(o);
   }
   return r;
@@ -753,19 +753,19 @@ function Be(e) {
     return o;
   }, [t]), (o) => n(o.join(" "))];
 }
-function L(e, t) {
+function U(e, t) {
   return T(
     () => new Intl.DateTimeFormat(t, { timeZone: "UTC", ...e }),
     [t, e]
   );
 }
 function Ct(e, t, n) {
-  const s = L(e, n);
+  const s = U(e, n);
   return T(() => {
     const r = [], o = /* @__PURE__ */ new Date();
     for (let a = 0; a < 7; a++) {
-      const f = (o.getDay() - t + 7) % 7;
-      r[f] = s.format(o), o.setDate(o.getDate() + 1);
+      const f = (o.getUTCDay() - t + 7) % 7;
+      r[f] = s.format(o), o.setUTCDate(o.getUTCDate() + 1);
     }
     return r;
   }, [t, s]);
@@ -780,7 +780,7 @@ function He({ props: e, context: t }) {
     page: f,
     locale: i,
     focusedDate: c
-  } = t, u = lt(), d = Ct(We, s, i), l = Ct(ze, s, i), m = L(qe, i), p = L(Ye, i), y = T(
+  } = t, u = lt(), d = Ct(We, s, i), l = Ct(ze, s, i), m = U(qe, i), p = U(Ye, i), y = T(
     () => f.start.add({ months: n }),
     [f, n]
   ), D = T(
@@ -885,7 +885,7 @@ const Ke = _(
           ] }))
         ] }) }),
         /* @__PURE__ */ b("tbody", { children: s.weeks.map((o, a) => /* @__PURE__ */ P("tr", { part: "tr week", children: [
-          t.showWeekNumbers && o[0] && /* @__PURE__ */ b("td", { class: "weeknumber", part: "td weeknumber", children: t.formatWeekNumbers ? t.formatWeekNumbers(Le(o[0])) : o[0] }),
+          t.showWeekNumbers && o[0] && /* @__PURE__ */ b("td", { class: "weeknumber", part: "td weeknumber", children: t.formatWeekNumbers ? t.formatWeekNumbers(Ue(o[0])) : o[0] }),
           o.map((f, i) => {
             const c = s.yearMonth.equals(f), u = t.showOutsideDays || c;
             return /* @__PURE__ */ b("td", { part: "td", children: u && /* @__PURE__ */ b("button", { ...s.getDayProps(f), children: f.day }) }, i);
@@ -1037,14 +1037,14 @@ function yt({
     }
     u(Ot(h, e));
   }, [i, e]);
-  const l = U();
+  const l = L();
   function m() {
     l.current.querySelectorAll("calendar-month").forEach((h) => h.focus());
   }
   function p(h) {
     s(h), a(v(h));
   }
-  const y = L(Je, t), D = L(Ze, t);
+  const y = U(Je, t), D = U(Ze, t);
   return {
     format: y,
     formatVerbose: D,
