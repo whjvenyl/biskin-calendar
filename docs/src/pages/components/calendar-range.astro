@@ -72,6 +72,13 @@ import Link from "../../components/Link.astro";
       <td><code>""</code></td>
     </tr>
     <tr>
+      <td><code>focusedDate</code></td>
+      <td><code>focused-date</code></td>
+      <td>The date that is considered "focused" by the calendar</td>
+      <td><code>string</code></td>
+      <td><code>undefined</code></td>
+    </tr>
+    <tr>
       <td><code>firstDayOfWeek</code></td>
       <td><code>first-day-of-week</code></td>
       <td>
@@ -99,7 +106,8 @@ import Link from "../../components/Link.astro";
       <td><code>locale</code></td>
       <td><code>locale</code></td>
       <td>
-        The locale date formatting. If not set, will use the browser's locale
+        The locale for formatting dates. If not set, will use the browser's
+        locale
       </td>
       <td><code>string | undefined</code></td>
       <td><code>undefined</code></td>
@@ -181,38 +189,6 @@ import Link from "../../components/Link.astro";
     </tr>
   </Table>
 
-  <Heading level={2}>Slots</Heading>
-
-  <Table>
-    <tr slot="head">
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-
-    <tr>
-      <td>Default slot</td>
-      <td>
-        The default slot is where you place your
-        <code>&lt;calendar-month&gt;</code> components, along with any other markup.
-        Note <code>&lt;calendar-month&gt;</code> does not need to be a direct descendant
-      </td>
-    </tr>
-    <tr>
-      <td><code>previous</code></td>
-      <td>
-        The inner content of the previous page button. By default uses text
-        "Previous". You will likely want to slot an icon here.
-      </td>
-    </tr>
-    <tr>
-      <td><code>next</code></td>
-      <td>
-        The inner content of the next page button. By default uses text "Next".
-        You will likely want to slot an icon here.
-      </td>
-    </tr>
-  </Table>
-
   <Heading level={2}>CSS Parts</Heading>
 
   <p>
@@ -260,6 +236,46 @@ import Link from "../../components/Link.astro";
     <tr>
       <td><code>heading</code></td>
       <td>The heading that labels the calendar</td>
+    </tr>
+  </Table>
+
+  <Heading level={2}>Slots</Heading>
+
+  <Table>
+    <tr slot="head">
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+
+    <tr>
+      <td>Default slot</td>
+      <td>
+        The default slot is where you place your
+        <code>&lt;calendar-month&gt;</code> components, along with any other markup.
+        Note <code>&lt;calendar-month&gt;</code> does not need to be a direct descendant
+      </td>
+    </tr>
+    <tr>
+      <td><code>previous</code></td>
+      <td>
+        The inner content of the previous page button. By default uses text
+        "Previous". You will likely want to slot an icon here
+      </td>
+    </tr>
+    <tr>
+      <td><code>next</code></td>
+      <td>
+        The inner content of the next page button. By default uses text "Next".
+        You will likely want to slot an icon here
+      </td>
+    </tr>
+    <tr>
+      <td><code>heading</code></td>
+      <td>
+        By default displays the visible heading for the component. You may want
+        to replace this with a year select. A separate visually-hidden heading
+        is always rendered for accessibility purposes
+      </td>
     </tr>
   </Table>
 </ApiLayout>

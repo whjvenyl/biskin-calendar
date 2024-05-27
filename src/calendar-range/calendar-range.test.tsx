@@ -5,9 +5,12 @@ import {
   click,
   clickDay,
   createSpy,
+  getDayButton,
   getMonth,
+  getMonthHeading,
   getNextPageButton,
   getPrevPageButton,
+  getSelectedDays,
   mount,
 } from "../utils/test.js";
 
@@ -22,6 +25,8 @@ type TestProps = {
   value: string;
   min: string;
   max: string;
+  focusedDate?: string;
+  months?: number;
   children?: VNodeAny;
 };
 
@@ -209,30 +214,39 @@ describe("CalendarRange", () => {
     });
   });
 
-  describe("multiple months", () => {
-    it("supports multiple months");
-    it("supports a year");
-    it("paginates with respect to duration");
-  });
+  describe("focused date", () => {
+    it("defaults to the first date in the range if not set", async () => {
+      const calendar = await mount(<Fixture value="2020-01-05/2020-01-10" />);
+      const month = getMonth(calendar);
 
-  describe("localization", () => {
-    it("localizes all days, months, years");
-  });
-
-  describe("methods", () => {
-    it("allows focusing today");
-    it("allows setting a month");
-    it("allows setting a year");
-  });
-
-  describe("custom layout", () => {
-    describe("header", () => {
-      it("allows arbitrary DOM structure");
-      it("allow configurable formatting options");
+      const day = getDayButton(month, "5 January");
+      expect(day).to.have.attribute("tabindex", "0");
     });
+  });
 
-    describe("grid", () => {
-      it("allows arbitrary DOM structure");
+  describe("grid", () => {
+    it("allows arbitrary DOM structure", async () => {
+      const calendar = await mount(
+        <Fixture value="2020-01-05/2020-01-07">
+          <div>
+            <div>
+              <div>
+                <CalendarMonth />
+              </div>
+            </div>
+          </div>
+        </Fixture>
+      );
+
+      const month = getMonth(calendar);
+      const fifth = getDayButton(month, "5 January");
+      const sixth = getDayButton(month, "6 January");
+      const seventh = getDayButton(month, "7 January");
+
+      expect(getMonthHeading(month)).to.have.text("January");
+      expect(fifth).to.have.attribute("aria-pressed", "true");
+      expect(sixth).to.have.attribute("aria-pressed", "true");
+      expect(seventh).to.have.attribute("aria-pressed", "true");
     });
   });
 });

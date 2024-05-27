@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@biskin-style/calendar Module - Development</title>
 
-    <script async type="module" src="./src/index.ts"></script>
-
     <style>
       * {
         box-sizing: border-box;
@@ -20,6 +18,23 @@
         display: flex;
         gap: 1em;
         flex-wrap: wrap;
+      }
+
+      .vh {
+        position: absolute;
+        transform: scale(0);
+      }
+
+      #date::part(header) {
+        gap: 1em;
+      }
+      #date::part(heading) {
+        flex: 1;
+      }
+
+      #date select {
+        width: 100%;
+        text-align: center;
       }
     </style>
   </head>
@@ -41,29 +56,63 @@
     </calendar-range>
 
     <h2>date</h2>
+    <calendar-date
+      id="date"
+      value="2020-04-01"
+      min="2019-11-01"
+      max="2025-03-20"
+      months="2"
+      show-outside-days
+    >
+      <div slot="heading">
+        <label for="yearSelect" class="vh">Year:</label>
+        <select id="yearSelect">
+          <option value="2019">2019</option>
+          <option value="2020" selected>2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+        </select>
+      </div>
 
-    <calendar-date months="3" value="2024-02-12" id="date">
       <div class="grid">
         <calendar-month></calendar-month>
         <calendar-month offset="1"></calendar-month>
-        <calendar-month offset="2"></calendar-month>
       </div>
     </calendar-date>
 
-    <calendar-date value="2020-01-01" id="date2">
-      <calendar-month></calendar-month>
-    </calendar-date>
+    <h2>multi</h2>
+    <calendar-multi
+      id="multi-date"
+      months="2"
+      show-outside-days
+      value="2024-05-07 2024-05-09"
+    >
+      <div class="grid">
+        <calendar-month></calendar-month>
+        <calendar-month offset="1"></calendar-month>
+      </div>
+    </calendar-multi>
 
-    <script>
+    <script type="module">
+      import "./src/index.ts";
+
       const output = document.getElementById("output");
+      const formatter = new Intl.DateTimeFormat("en", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+
+      const toIso = (date) => date.toISOString().split("T")[0];
 
       if (window.range) {
         let start = null;
-        const formatter = new Intl.DateTimeFormat("en", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
 
         window.range.addEventListener("rangestart", (e) => {
           const { detail } = e;
@@ -74,6 +123,26 @@
         window.range.addEventListener("rangeend", (e) => {
           const { detail } = e;
           output.textContent = `Range selected: ${formatter.formatRange(start, detail)}`;
+        });
+      }
+
+      if (window.date) {
+        date.isDateDisallowed = (date) =>
+          date.getDay() === 0 || date.getDay() === 6;
+
+        yearSelect.value = new Date(
+          date.getAttribute("value")
+        ).getUTCFullYear();
+
+        date.addEventListener("focusday", (e) => {
+          yearSelect.value = e.detail.getUTCFullYear();
+          console.log(formatter.format(e.detail));
+        });
+
+        yearSelect.addEventListener("change", (e) => {
+          const d = new Date(date.focusedDate);
+          d.setUTCFullYear(e.target.value);
+          date.focusedDate = toIso(d);
         });
       }
     </script>

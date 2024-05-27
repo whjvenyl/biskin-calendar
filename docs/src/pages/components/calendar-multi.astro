@@ -7,28 +7,30 @@ import Link from "../../components/Link.astro";
 ---
 
 <ApiLayout
-  heading="<calendar-date-multiple>"
+  heading="<calendar-multi>"
   meta={{
-    title: "<calendar-date-multiple> API",
+    title: "<calendar-multi> API",
     description:
-      "The calendar-date-multiple component is used to select a multiple single dates. Find out how to use its properties, methods, events, and styling options.",
+      "The calendar-multi component is used to select multiple individual dates. Find out how to use its properties, methods, events, and styling options.",
   }}
 >
   <p>
     This component, combined with
     <Link href="/components/calendar-month/"
       ><code>{`<calendar-month>`}</code></Link
-    >, is used to select multiple single dates. It can display one or more months at a
-    time.
+    >, is used to select multiple individual dates. It can display one or more
+    months at a time.
   </p>
 
   <Example>
-    <calendar-date-multiple
-      value="2024-03-13,2024-03-14,2024-03-15,2024-03-06"
+    <calendar-multi
+      value="2024-01-10 2024-01-20"
+      min="2024-01-01"
+      max="2024-12-31"
       locale="en-GB"
     >
       <calendar-month></calendar-month>
-    </calendar-date-multiple>
+    </calendar-multi>
   </Example>
 
   <Heading level={2}>Properties and attributes</Heading>
@@ -47,7 +49,7 @@ import Link from "../../components/Link.astro";
     <tr>
       <td><code>value</code></td>
       <td><code>value</code></td>
-      <td>The currently selected dates</td>
+      <td>A space-separated list of selected dates</td>
       <td><code>string</code></td>
       <td><code>""</code></td>
     </tr>
@@ -64,6 +66,13 @@ import Link from "../../components/Link.astro";
       <td>The latest date that can be selected</td>
       <td><code>string</code></td>
       <td><code>""</code></td>
+    </tr>
+    <tr>
+      <td><code>focusedDate</code></td>
+      <td><code>focused-date</code></td>
+      <td>The date that is considered "focused" by the calendar</td>
+      <td><code>string</code></td>
+      <td><code>undefined</code></td>
     </tr>
     <tr>
       <td><code>firstDayOfWeek</code></td>
@@ -172,7 +181,7 @@ import Link from "../../components/Link.astro";
     CSS parts allow for fine-grained styling and theming. They target specific
     elements inside the component. An element may have multiple parts, and a
     part may be used on multiple elements. They can be used in isolation, or
-    combined to e.g. style selected days within a range.
+    combined.
   </p>
 
   <p>
@@ -212,7 +221,7 @@ import Link from "../../components/Link.astro";
     </tr>
     <tr>
       <td><code>heading</code></td>
-      <td>The heading containing the month and year</td>
+      <td>The heading that labels the calendar</td>
     </tr>
   </Table>
 
@@ -236,21 +245,29 @@ import Link from "../../components/Link.astro";
       <td><code>previous</code></td>
       <td>
         The inner content of the previous page button. By default uses text
-        "Previous". You will likely want to slot an icon here.
+        "Previous". You will likely want to slot an icon here
       </td>
     </tr>
     <tr>
       <td><code>next</code></td>
       <td>
         The inner content of the next page button. By default uses text "Next".
-        You will likely want to slot an icon here.
+        You will likely want to slot an icon here
+      </td>
+    </tr>
+    <tr>
+      <td><code>heading</code></td>
+      <td>
+        By default displays the visible heading for the component. You may want
+        to replace this with a year select. A separate visually-hidden heading
+        is always rendered for accessibility purposes
       </td>
     </tr>
   </Table>
 </ApiLayout>
 
 <style is:global>
-  calendar-date-multiple {
+  calendar-multi {
     margin-inline: auto;
   }
 </style>

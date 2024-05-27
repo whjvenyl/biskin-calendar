@@ -1,8 +1,8 @@
 import { c, css, useContext, useRef, type Host } from 'atomico';
-import { getWeekNumber } from '../utils/date';
 import { reset, vh } from '../utils/styles.js';
 import { useCalendarMonth } from './useCalendarMonth.js';
 import { CalendarMonthContext } from './CalendarMonthContext.js';
+import { getWeekNumber, toDate } from '../utils/date';
 
 export const CalendarMonth = c(
   (
@@ -22,11 +22,11 @@ export const CalendarMonth = c(
 
     return (
       <host shadowDom focus={focus}>
-        <div id="heading" part="heading">
-          {calendar.monthFormatter.format(calendar.yearMonth.toDate())}
+        <div id="h" part="heading">
+          {calendar.formatter.format(toDate(calendar.yearMonth))}
         </div>
 
-        <table ref={table} aria-labelledby="heading" part="table">
+        <table ref={table} aria-labelledby="h" part="table">
           <thead>
             <tr part="tr head">
               {context.showWeekNumbers && (
@@ -34,10 +34,10 @@ export const CalendarMonth = c(
                   <span class="vh" aria-hidden="true" />
                 </th>
               )}
-              {calendar.dayNamesLong.map((dayName, i) => (
+              {calendar.daysLong.map((dayName, i) => (
                 <th part="th" scope="col">
                   <span class="vh">{dayName}</span>
-                  <span aria-hidden="true">{calendar.dayNamesShort[i]}</span>
+                  <span aria-hidden="true">{calendar.daysShort[i]}</span>
                 </th>
               ))}
             </tr>
@@ -73,8 +73,8 @@ export const CalendarMonth = c(
     props: {
       offset: {
         type: Number,
-        value: 0
-      }
+        value: 0,
+      },
     },
 
     styles: [
@@ -127,8 +127,8 @@ export const CalendarMonth = c(
           inline-size: 2.25rem;
         }
 
-        button:hover:where(:not(:disabled)) {
-          background: rgba(0, 0, 0, 0.05);
+        button:hover:where(:not(:disabled, [aria-disabled])) {
+          background: #0000000d;
         }
 
         button:is([aria-pressed="true"], :focus-visible) {

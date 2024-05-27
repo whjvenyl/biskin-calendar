@@ -4,7 +4,7 @@ declare global {
   interface HTMLElementTagNameMap {
     "calendar-month": InstanceType<typeof CalendarMonth>;
     "calendar-date": InstanceType<typeof CalendarDate>;
-    "calendar-date-multiple": InstanceType<typeof CalendarDateMultiple>;
+    "calendar-multi": InstanceType<typeof CalendarMulti>;
     "calendar-range": InstanceType<typeof CalendarRange>;
   }
 }

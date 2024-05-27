@@ -1,29 +1,38 @@
-import { expect } from "@open-wc/testing";
+import { expect, nextFrame } from "@open-wc/testing";
 import { sendKeys } from "@web/test-runner-commands";
 import type { VNodeAny } from "atomico/types/vnode.js";
-import { clickDay, createSpy, getGrid, getMonth } from "../utils/test.js";
+import {
+  clickDay,
+  createSpy,
+  getGrid,
+  getMonthHeading,
+  getMonth,
+  getDayButton,
+  getSelectedDays,
+  click,
+} from "../utils/test.js";
 import {
   CalendarMonthContext,
   type CalendarDateContext,
+  type CalendarMultiContext,
   type CalendarRangeContext,
 } from "./CalendarMonthContext.js";
 import { CalendarMonth } from "../calendar-month/calendar-month.js";
 import { fixture } from "atomico/test-dom";
 import { PlainDate } from "../utils/temporal.js";
-import { DateWindow } from "../utils/DateWindow.js";
-import { today } from "../utils/date.js";
+import { toDate, today } from "../utils/date.js";
 
 type MonthContextInstance = InstanceType<typeof CalendarMonthContext>;
 
 interface TestPropsBase {
-  onselectday: (e: CustomEvent<PlainDate>) => void;
-  onfocusday: (e: CustomEvent<PlainDate>) => void;
-  focusedDate: PlainDate;
-  dir: "ltr" | "rtl";
+  onselectday?: (e: CustomEvent<PlainDate>) => void;
+  onfocusday?: (e: CustomEvent<PlainDate>) => void;
+  dir?: "rtl" | "ltr";
 }
 
 interface DateTestProps extends TestPropsBase, CalendarDateContext {}
 interface RangeTestProps extends TestPropsBase, CalendarRangeContext {}
+interface MultiTestProps extends TestPropsBase, CalendarMultiContext {}
 
 const isWeekend = (date: Date) => date.getDay() === 0 || date.getDay() === 6;
 
@@ -32,14 +41,9 @@ function Fixture({
   onfocusday,
   focusedDate = today(),
   dir,
+  type = "date",
   ...props
-}: Partial<DateTestProps> | Partial<RangeTestProps>): VNodeAny {
-  const dateWindow = new DateWindow(
-    focusedDate.toPlainYearMonth(),
-    { months: 1 },
-    focusedDate
-  );
-
+}: Partial<DateTestProps | RangeTestProps | MultiTestProps>): VNodeAny {
   return (
     <CalendarMonthContext
       onselectday={onselectday}
@@ -48,7 +52,13 @@ function Fixture({
       value={{
         firstDayOfWeek: 1,
         locale: "en-GB",
-        dateWindow,
+        page: {
+          start: focusedDate.toPlainYearMonth(),
+          end: focusedDate.toPlainYearMonth(),
+        },
+        focusedDate,
+        // @ts-expect-error - not sure why this is a problem
+        type,
         ...props,
       }}
     >
@@ -60,9 +70,7 @@ function Fixture({
 export async function mount(node: VNodeAny) {
   const context = fixture<MonthContextInstance>(node);
   const month = getMonth(context);
-
-  await context.updated;
-  await month.updated;
+  await nextFrame();
 
   return month;
 }
@@ -73,35 +81,129 @@ describe("CalendarMonth", () => {
     expect(calendar).to.be.instanceOf(CalendarMonth);
   });
 
+  describe("value types", () => {
+    describe("range", () => {
+      it("handles an empty value", async () => {
+        const month = await mount(
+          <Fixture
+            type="range"
+            value={[]}
+            focusedDate={PlainDate.from("2024-01-01")}
+          />
+        );
+
+        const selected = getSelectedDays(month);
+        expect(selected.length).to.eq(0);
+      });
+
+      it("marks a range as selected", async () => {
+        const month = await mount(
+          <Fixture
+            focusedDate={PlainDate.from("2020-01-01")}
+            type="range"
+            value={[PlainDate.from("2020-01-01"), PlainDate.from("2020-01-03")]}
+          />
+        );
+
+        const selected = getSelectedDays(month);
+        expect(selected.length).to.eq(3);
+
+        expect(selected[0]).to.have.attribute("aria-label", "1 January");
+        expect(selected[0]!.part.contains("selected")).to.eq(true);
+        expect(selected[0]!.part.contains("range-start"));
+
+        expect(selected[1]).to.have.attribute("aria-label", "2 January");
+        expect(selected[1]!.part.contains("selected")).to.eq(true);
+        expect(selected[1]!.part.contains("range-inner"));
+
+        expect(selected[2]).to.have.attribute("aria-label", "3 January");
+        expect(selected[2]!.part.contains("selected")).to.eq(true);
+        expect(selected[2]!.part.contains("range-end"));
+      });
+    });
+
+    describe("single date", () => {
+      it("handles an empty value", async () => {
+        const month = await mount(
+          <Fixture focusedDate={PlainDate.from("2024-01-01")} />
+        );
+
+        const selected = getSelectedDays(month);
+        expect(selected.length).to.eq(0);
+      });
+
+      it("marks a single date as selected", async () => {
+        const month = await mount(
+          <Fixture
+            focusedDate={PlainDate.from("2020-01-01")}
+            value={PlainDate.from("2020-01-01")}
+          />
+        );
+
+        const selected = getSelectedDays(month);
+        expect(selected.length).to.eq(1);
+        expect(selected[0]).to.have.attribute("aria-label", "1 January");
+        expect(selected[0]!.part.contains("selected")).to.eq(true);
+      });
+    });
+
+    describe("multi date", () => {
+      it("handles an empty value", async () => {
+        const month = await mount(
+          <Fixture
+            type="multi"
+            value={[]}
+            focusedDate={PlainDate.from("2024-01-01")}
+          />
+        );
+
+        const selected = getSelectedDays(month);
+        expect(selected.length).to.eq(0);
+      });
+
+      it("marks multiple dates as selected", async () => {
+        const month = await mount(
+          <Fixture
+            focusedDate={PlainDate.from("2020-01-01")}
+            type="multi"
+            value={[
+              PlainDate.from("2020-01-01"),
+              PlainDate.from("2020-01-02"),
+              PlainDate.from("2020-01-03"),
+            ]}
+          />
+        );
+
+        const selected = getSelectedDays(month);
+        expect(selected.length).to.eq(3);
+        expect(selected[0]).to.have.attribute("aria-label", "1 January");
+        expect(selected[1]).to.have.attribute("aria-label", "2 January");
+        expect(selected[2]).to.have.attribute("aria-label", "3 January");
+      });
+    });
+  });
+
   describe("a11y/ARIA requirements", () => {
     describe("grid", () => {
       it("is labelled", async () => {
         const month = await mount(<Fixture />);
-        const grid = getGrid(month);
 
         // has accessible label
-        const labelledById = grid.getAttribute("aria-labelledby");
-        const title = month.shadowRoot!.getElementById(labelledById!);
+        const title = getMonthHeading(month);
         expect(title).not.to.eq(undefined);
       });
 
-      it("marks selected day as pressed", async () => {
-        const month = await mount(
-          <Fixture
-            focusedDate={PlainDate.from("2020-01-01")}
-            value={PlainDate.from("2020-01-02")}
-          />
-        );
-        const grid = getGrid(month);
+      it("marks today", async () => {
+        const month = await mount(<Fixture />);
 
-        // should be single selected element
-        const selected = grid.querySelectorAll<HTMLButtonElement>(
-          `[aria-pressed="true"]`
-        );
+        const todaysDate = toDate(today()).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "long",
+        });
+        const button = getDayButton(month, todaysDate)!;
 
-        expect(selected.length).to.eq(1);
-        expect(selected[0]).to.have.trimmed.text("2");
-        expect(selected[0]).to.have.attribute("aria-label", "2 January");
+        expect(button.part.contains("today")).to.eq(true);
+        expect(button).to.have.attribute("aria-current", "date");
       });
 
       it("uses a roving tab index", async () => {
@@ -123,8 +225,6 @@ describe("CalendarMonth", () => {
         expect(focusable[0]).to.have.trimmed.text("1");
         expect(focusable[0]).to.have.attribute("aria-label", "1 January");
       });
-
-      it("correctly abbreviates the shortened day names");
     });
   });
 
@@ -141,7 +241,7 @@ describe("CalendarMonth", () => {
       expect(spy.last[0].detail.toString()).to.eq("2020-04-19");
     });
 
-    it("cannot select a disabled date", async () => {
+    it("cannot select a disallowed date", async () => {
       const spy = createSpy<(e: CustomEvent<PlainDate>) => void>();
       const calendar = await mount(
         <Fixture
@@ -151,8 +251,11 @@ describe("CalendarMonth", () => {
         />
       );
 
-      await clickDay(calendar, "4 January");
+      const day = getDayButton(calendar, "4 January")!;
+      expect(day.part.contains("disallowed")).to.eq(true);
+      expect(day).to.have.attribute("aria-disabled", "true");
 
+      await click(day);
       expect(spy.called).to.eq(false);
     });
   });
@@ -461,6 +564,55 @@ describe("CalendarMonth", () => {
       await clickDay(month, "30 January");
       expect(spy.count).to.eq(1);
       expect(spy.last[0].detail.toString()).to.eq("2020-01-30");
+    });
+  });
+
+  it("can show outside days", async () => {
+    const month = await mount(
+      <Fixture focusedDate={PlainDate.from("2020-04-01")} showOutsideDays />
+    );
+
+    const outsideMarch = getDayButton(month, "30 March");
+    const outsideMay = getDayButton(month, "3 May");
+
+    expect(outsideMarch.part.contains("outside")).to.eq(true);
+    expect(outsideMay.part.contains("outside")).to.eq(true);
+  });
+
+  describe("localization", async () => {
+    it("localizes days and months", async () => {
+      const month = await mount(
+        <Fixture focusedDate={PlainDate.from("2020-01-15")} locale="fr-FR" />
+      );
+      const grid = getGrid(month);
+
+      const accessibleHeadings = grid.querySelectorAll(
+        "th span:not([aria-hidden])"
+      );
+      expect(accessibleHeadings[0]).to.have.trimmed.text("lundi");
+      expect(accessibleHeadings[1]).to.have.trimmed.text("mardi");
+      expect(accessibleHeadings[2]).to.have.trimmed.text("mercredi");
+      expect(accessibleHeadings[3]).to.have.trimmed.text("jeudi");
+      expect(accessibleHeadings[4]).to.have.trimmed.text("vendredi");
+      expect(accessibleHeadings[5]).to.have.trimmed.text("samedi");
+      expect(accessibleHeadings[6]).to.have.trimmed.text("dimanche");
+
+      const visualHeadings = grid.querySelectorAll(
+        "th span[aria-hidden='true']"
+      );
+      expect(visualHeadings[0]).to.have.trimmed.text("L");
+      expect(visualHeadings[1]).to.have.trimmed.text("M");
+      expect(visualHeadings[2]).to.have.trimmed.text("M");
+      expect(visualHeadings[3]).to.have.trimmed.text("J");
+      expect(visualHeadings[4]).to.have.trimmed.text("V");
+      expect(visualHeadings[5]).to.have.trimmed.text("S");
+      expect(visualHeadings[6]).to.have.trimmed.text("D");
+
+      const title = getMonthHeading(month);
+      expect(title).to.have.trimmed.text("janvier");
+
+      const button = getDayButton(month, "15 janvier");
+      expect(button).to.exist;
     });
   });
 });

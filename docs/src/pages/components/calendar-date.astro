@@ -68,6 +68,13 @@ import Link from "../../components/Link.astro";
       <td><code>""</code></td>
     </tr>
     <tr>
+      <td><code>focusedDate</code></td>
+      <td><code>focused-date</code></td>
+      <td>The date that is considered "focused" by the calendar</td>
+      <td><code>string</code></td>
+      <td><code>undefined</code></td>
+    </tr>
+    <tr>
       <td><code>firstDayOfWeek</code></td>
       <td><code>first-day-of-week</code></td>
       <td>
@@ -214,7 +221,7 @@ import Link from "../../components/Link.astro";
     </tr>
     <tr>
       <td><code>heading</code></td>
-      <td>The heading containing the month and year</td>
+      <td>The heading that labels the calendar</td>
     </tr>
   </Table>
 
@@ -245,7 +252,15 @@ import Link from "../../components/Link.astro";
       <td><code>next</code></td>
       <td>
         The inner content of the next page button. By default uses text "Next".
-        You will likely want to slot an icon here.
+        You will likely want to slot an icon here
+      </td>
+    </tr>
+    <tr>
+      <td><code>heading</code></td>
+      <td>
+        By default displays the visible heading for the component. You may want
+        to replace this with a year select. A separate visually-hidden heading
+        is always rendered for accessibility purposes
       </td>
     </tr>
   </Table>

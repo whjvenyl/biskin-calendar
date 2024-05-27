@@ -1,11 +1,11 @@
-import { c, useEffect, useState, type Host, useEvent } from "atomico";
+import { c, useState, type Host, useEvent } from "atomico";
 import { PlainDate } from "../utils/temporal.js";
-import { inRange } from "../utils/date.js";
-import { useDateRangeProp } from "../utils/hooks.js";
+import { useDateProp, useDateRangeProp } from "../utils/hooks.js";
 import { CalendarBase, styles, props } from "../calendar-base/calendar-base.js";
 import { useCalendarBase } from "../calendar-base/useCalendarBase.js";
+import { toDate } from "../utils/date.js";
 
-type Tentative = { first: PlainDate; second: PlainDate };
+type Tentative = { a: PlainDate; b: PlainDate };
 
 const sort = (a: PlainDate, b: PlainDate): [PlainDate, PlainDate] =>
   PlainDate.compare(a, b) < 0 ? [a, b] : [b, a];
@@ -20,7 +20,12 @@ export const CalendarRange = c(
     onFocusDay: CustomEvent<Date>;
   }> => {
     const [value, setValue] = useDateRangeProp("value");
-    const calendar = useCalendarBase(props);
+    const [focusedDate = value[0], setFocusedDate] = useDateProp("focusedDate");
+    const calendar = useCalendarBase({
+      ...props,
+      focusedDate,
+      setFocusedDate,
+    });
     const dispatchStart = useEvent<Date>("rangestart");
     const dispatchEnd = useEvent<Date>("rangeend");
 
@@ -28,25 +33,15 @@ export const CalendarRange = c(
     // the second selection can come before or after the first selection for improved ux
     const [tentative, setTentative] = useState<Tentative | undefined>();
 
-    // TODO: really we should have focusedDate in the deps array but it breaks the logic then
-    useEffect(() => {
-      if (
-        value.length &&
-        !inRange(calendar.dateWindow.focusedDate, value[0], value[1])
-      ) {
-        calendar.setFocusedDate(value[1]);
-      }
-    }, [value]);
-
-    async function handleFocus(e: CustomEvent<PlainDate>) {
-      calendar.handleFocus(e);
+    function handleFocus(e: CustomEvent<PlainDate>) {
+      calendar.onFocus(e);
       handleHover(e);
     }
 
     function handleHover(e: CustomEvent<PlainDate>) {
       e.stopPropagation();
       setTentative((t) => {
-        return t ? { ...t, second: e.detail } : t;
+        return t ? { ...t, b: e.detail } : t;
       });
     }
 
@@ -55,26 +50,25 @@ export const CalendarRange = c(
       e.stopPropagation();
 
       if (!tentative) {
-        setTentative({ first: detail, second: detail });
-        dispatchStart(detail.toDate());
+        setTentative({ a: detail, b: detail });
+        dispatchStart(toDate(detail));
       } else {
-        setValue(sort(tentative.first, detail));
+        setValue(sort(tentative.a, detail));
         setTentative(undefined);
-        dispatchEnd(detail.toDate());
+        dispatchEnd(toDate(detail));
         calendar.dispatch();
       }
     }
 
-    const highlightedRange = tentative
-      ? sort(tentative.first, tentative.second)
-      : value;
+    const range = tentative ? sort(tentative.a, tentative.b) : value;
 
     return (
       <host shadowDom focus={calendar.focus}>
         <CalendarBase
           {...props}
           {...calendar}
-          highlightedRange={highlightedRange}
+          type="range"
+          value={range}
           onFocus={handleFocus}
           onHover={handleHover}
           onSelect={handleSelect}

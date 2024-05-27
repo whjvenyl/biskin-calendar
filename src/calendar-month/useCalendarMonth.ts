@@ -4,24 +4,15 @@ import {
   clamp,
   endOfWeek,
   getViewOfMonth,
-  inRange,
   startOfWeek,
+  toDate,
   today,
 } from "../utils/date.js";
 import type { PlainDate } from "../utils/temporal.js";
 import type { CalendarMonthContextValue } from "./CalendarMonthContext.js";
 
-function cx(map: Record<string, boolean | null | undefined>) {
-  let result = "";
-
-  for (const key in map) {
-    if (map[key]) {
-      result += ` ${key}`;
-    }
-  }
-
-  return result;
-}
+const inRange = (date: PlainDate, min?: PlainDate, max?: PlainDate) =>
+  clamp(date, min, max) === date;
 
 const isLTR = (e: Event) => (e.target as HTMLElement).matches(":dir(ltr)");
 
@@ -38,19 +29,25 @@ type UseCalendarMonthOptions = {
 
 export function useCalendarMonth({ props, context }: UseCalendarMonthOptions) {
   const { offset } = props;
-  const { firstDayOfWeek, isDateDisallowed, min, max, dateWindow, locale } =
-    context;
+  const {
+    firstDayOfWeek,
+    isDateDisallowed,
+    min,
+    max,
+    page,
+    locale,
+    focusedDate,
+  } = context;
 
   const todaysDate = today();
-  const dayNamesLong = useDayNames(longDayOptions, firstDayOfWeek, locale);
-  const dayNamesShort = useDayNames(shortDayOptions, firstDayOfWeek, locale);
+  const daysLong = useDayNames(longDayOptions, firstDayOfWeek, locale);
+  const daysShort = useDayNames(shortDayOptions, firstDayOfWeek, locale);
   const dayFormatter = useDateFormatter(dayOptions, locale);
-  const monthFormatter = useDateFormatter(monthOptions, locale);
+  const formatter = useDateFormatter(monthOptions, locale);
 
-  const { focusedDate } = dateWindow;
   const yearMonth = useMemo(
-    () => dateWindow.start.add({ months: offset }),
-    [dateWindow, offset]
+    () => page.start.add({ months: offset }),
+    [page, offset]
   );
 
   const weeks = useMemo(
@@ -104,47 +101,55 @@ export function useCalendarMonth({ props, context }: UseCalendarMonthOptions) {
 
   function getDayProps(date: PlainDate) {
     const isInMonth = yearMonth.equals(date);
+
+    // days outside of month are only shown if `showOutsideDays` is true
+    if (!context.showOutsideDays && !isInMonth) {
+      return;
+    }
+
     const isFocusedDay = date.equals(focusedDate);
     const isToday = date.equals(todaysDate);
-    const asDate = date.toDate();
+    const asDate = toDate(date);
     const isDisallowed = isDateDisallowed?.(asDate);
     const isDisabled = !inRange(date, min, max);
 
-    let isSelected = false;
-    let isRange = false;
-    let isRangeStart = false;
-    let isRangeEnd = false;
+    let parts = "";
+    let isSelected: boolean | undefined;
 
-    /* range */
-    if ("highlightedRange" in context) {
-      const [start, end] = context.highlightedRange;
-      isRange = true;
-      isRangeStart = start?.equals(date) ?? false;
-      isRangeEnd = end?.equals(date) ?? false;
-      isSelected = start && end ? inRange(date, start, end) : false;
+    if (context.type === "range") {
+      const [start, end] = context.value;
+      const isRangeStart = start?.equals(date);
+      const isRangeEnd = end?.equals(date);
+      isSelected = start && end && inRange(date, start, end);
+
+      // prettier-ignore
+      parts = `${
+        isRangeStart ? "range-start" : ""
+      } ${
+        isRangeEnd ? "range-end" : ""
+      } ${
+        isSelected && !isRangeStart && !isRangeEnd ? "range-inner" : ""
+      }`;
+    } else if (context.type === "multi") {
+      isSelected = context.value.some((d) => d.equals(date));
+    } else {
+      isSelected = context.value?.equals(date);
     }
-    /* multiple dates */
-    else if ("selectedDates" in context) {
-      isSelected = context.selectedDates?.some((d) => d.equals(date)) ?? false;
-    }
-    /* date */
-    else if ("value" in context) {
-      isSelected = context.value?.equals(date) ?? false;
-    }
+
+    // prettier-ignore
+    const commonParts = `button day ${
+      // we don't want outside days to ever be shown as selected
+      isInMonth ? (isSelected ? "selected" : "") : "outside"
+    } ${
+      isDisallowed ? "disallowed" : ""
+    } ${
+        isDisabled ? "disabled" : ""
+    } ${
+      isToday ? "today" : ""
+    }`;
 
     return {
-      part: cx({
-        button: true,
-        day: true,
-        selected: isInMonth && isSelected,
-        today: isToday,
-        disallowed: isDisallowed,
-        disabled: isDisabled,
-        outside: !isInMonth,
-        "range-start": isRangeStart,
-        "range-end": isRangeEnd,
-        "range-inner": isRange && isSelected && !isRangeStart && !isRangeEnd,
-      }),
+      part: `${commonParts} ${parts}`,
       tabindex: isInMonth && isFocusedDay ? 0 : -1,
       disabled: isDisabled,
       "aria-disabled": isDisallowed ? "true" : undefined,
@@ -169,9 +174,9 @@ export function useCalendarMonth({ props, context }: UseCalendarMonthOptions) {
   return {
     weeks,
     yearMonth,
-    dayNamesLong,
-    dayNamesShort,
-    monthFormatter,
+    daysLong,
+    daysShort,
+    formatter,
     getDayProps,
   };
 }

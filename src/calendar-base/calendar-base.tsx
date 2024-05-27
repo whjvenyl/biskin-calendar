@@ -2,11 +2,11 @@ import { css } from "atomico";
 import {
   CalendarMonthContext,
   type CalendarDateContext,
+  type CalendarMultiContext,
   type CalendarRangeContext,
-  type CalendarDateMultipleContext,
 } from "../calendar-month/CalendarMonthContext.js";
 import { reset, vh } from "../utils/styles.js";
-import type { DaysOfWeek } from "../utils/date.js";
+import { toDate, type DaysOfWeek } from "../utils/date.js";
 import type { PlainDate } from "../utils/temporal.js";
 
 interface CalendarBaseProps {
@@ -21,41 +21,52 @@ interface CalendarBaseProps {
 
 interface CalendarRangeProps extends CalendarBaseProps, CalendarRangeContext {}
 interface CalendarDateProps extends CalendarBaseProps, CalendarDateContext {}
-interface CalendarDateMultipleProps extends CalendarBaseProps, CalendarDateMultipleContext {}
+interface CalendarMultiProps extends CalendarBaseProps, CalendarMultiContext {}
 
-export function CalendarBase(props: CalendarDateProps | CalendarRangeProps | CalendarDateMultipleProps) {
-  const start = props.dateWindow.start.toDate();
-  const end = props.dateWindow.end.toDate();
+function Button(props: {
+  name: string;
+  onclick: (() => void) | undefined;
+  children?: unknown;
+}) {
+  return (
+    // biome-ignore lint/a11y/useButtonType: <explanation>
+    <button
+      part={`button ${props.name} ${!props.onclick ? "disabled" : ""}`}
+      onclick={props.onclick}
+      aria-disabled={!props.onclick ? "true" : null}
+    >
+      <slot name={props.name}>{props.children}</slot>
+    </button>
+  );
+}
+
+export function CalendarBase(
+  props: CalendarDateProps | CalendarRangeProps | CalendarMultiProps
+) {
+  const start = toDate(props.page.start);
+  const end = toDate(props.page.end);
 
   return (
-    <div role="group" aria-labelledby="label" part="container">
-      <div id="label" class="vh" aria-live="polite" aria-atomic="true">
+    <div role="group" aria-labelledby="h" part="container">
+      <div id="h" class="vh" aria-live="polite" aria-atomic="true">
         {props.formatVerbose.formatRange(start, end)}
       </div>
 
-      <div class="header" part="header">
+      <div part="header">
         {props.disableNavigation ? null : (
-          <button
-            part={`button previous ${props.previous ? "" : "disabled"}`}
-            onclick={props.previous}
-            aria-disabled={props.previous ? null : "true"}
-          >
-            <slot name="previous">Previous</slot>
-          </button>
+            <Button name="previous" onclick={props.previous}>
+              Previous
+            </Button>
         )}
 
-        <div id="heading" part="heading" aria-hidden="true">
-          {props.format.formatRange(start, end)}
-        </div>
+        <slot part="heading" name="heading">
+          <div aria-hidden="true">{props.format.formatRange(start, end)}</div>
+        </slot>
 
         {props.disableNavigation ? null : (
-          <button
-            part={`button next ${props.next ? "" : "disabled"}`}
-            onclick={props.next}
-            aria-disabled={props.next ? null : "true"}
-          >
-            <slot name="next">Next</slot>
-          </button>
+            <Button name="next" onclick={props.next}>
+              Next
+            </Button>
         )}
       </div>
 
@@ -65,6 +76,7 @@ export function CalendarBase(props: CalendarDateProps | CalendarRangeProps | Cal
         onfocusday={props.onFocus}
         onhoverday={props.onHover}
       >
+        {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
         <slot></slot>
       </CalendarMonthContext>
     </div>
@@ -78,7 +90,7 @@ export const props = {
   },
   readonly: {
     type: Boolean,
-    value: (): boolean => false,
+    value: false,
   },
   min: {
     type: String,
@@ -98,11 +110,11 @@ export const props = {
   },
   showOutsideDays: {
     type: Boolean,
-    value: (): boolean => false,
+    value: false,
   },
   showWeekNumbers: {
     type: Boolean,
-    value: (): boolean => false,
+    value: false,
   },
   formatWeekNumbers: {
     type: Function,
@@ -118,8 +130,12 @@ export const props = {
   },
   disableNavigation: {
     type: Boolean,
-    value: (): boolean => false,
-  }
+    value: false,
+  },
+  focusedDate: {
+    type: String,
+    value: (): string | undefined => undefined,
+  },
 };
 
 export const styles = [
@@ -137,16 +153,17 @@ export const styles = [
       gap: 1em;
     }
 
-    .header {
+    :host::part(header) {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    #heading {
+    :host::part(heading) {
+      display: flex;
+      margin: auto;
       font-weight: bold;
       font-size: 1.25em;
-      margin: auto;
     }
 
     button {
@@ -159,7 +176,7 @@ export const styles = [
 
     button[aria-disabled] {
       cursor: default;
-      opacity: 0.4;
+      opacity: 0.5;
     }
   `,
 ];

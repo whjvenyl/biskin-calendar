@@ -1,4 +1,4 @@
-class oe {
+class te {
   /**
    * @type {T}
    */
@@ -20,7 +20,7 @@ class oe {
    * @param {T} value
    */
   set current(t) {
-    this.#t != t && (this.#t = t, this.#e.forEach((s) => s(t)));
+    this.#t != t && (this.#t = t, this.#e.forEach((n) => n(t)));
   }
   /**
    * @type {import("hooks").Ref["on"]}
@@ -29,113 +29,113 @@ class oe {
     return this.#e.add(t), () => this.#e.delete(t);
   }
 }
-const At = (e) => new oe(e), V = Symbol.for("atomico.hooks");
-globalThis[V] = globalThis[V] || {};
-let M = globalThis[V];
-const re = Symbol.for("Atomico.suspense"), Rt = Symbol.for("Atomico.effect"), ae = Symbol.for("Atomico.layoutEffect"), It = Symbol.for("Atomico.insertionEffect"), O = (e, t, s) => {
-  const { i: n, hooks: o } = M.c, r = o[n] = o[n] || {};
-  return r.value = e(r.value), r.effect = t, r.tag = s, M.c.i++, o[n].value;
-}, ie = (e) => O((t = At(e)) => t), L = () => O((e = At(M.c.host)) => e), Ut = () => M.c.update, ce = (e, t, s = 0) => {
-  let n = {}, o = !1;
-  const r = () => o, a = (f, l) => {
-    for (const h in n) {
-      const i = n[h];
-      i.effect && i.tag === f && (i.value = i.effect(i.value, l));
+const Ft = (e) => new te(e), tt = Symbol.for("atomico.hooks");
+globalThis[tt] = globalThis[tt] || {};
+let M = globalThis[tt];
+const ee = Symbol.for("Atomico.suspense"), It = Symbol.for("Atomico.effect"), ne = Symbol.for("Atomico.layoutEffect"), Rt = Symbol.for("Atomico.insertionEffect"), A = (e, t, n) => {
+  const { i: s, hooks: r } = M.c, o = r[s] = r[s] || {};
+  return o.value = e(o.value), o.effect = t, o.tag = n, M.c.i++, r[s].value;
+}, se = (e) => A((t = Ft(e)) => t), U = () => A((e = Ft(M.c.host)) => e), $t = () => M.c.update, oe = (e, t, n = 0) => {
+  let s = {}, r = !1;
+  const o = () => r, a = (c, u) => {
+    for (const d in s) {
+      const l = s[d];
+      l.effect && l.tag === c && (l.value = l.effect(l.value, u));
     }
   };
-  return { load: (f) => {
-    M.c = { host: t, hooks: n, update: e, i: 0, id: s };
-    let l;
+  return { load: (c) => {
+    M.c = { host: t, hooks: s, update: e, i: 0, id: n };
+    let u;
     try {
-      o = !1, l = f();
-    } catch (h) {
-      if (h !== re)
-        throw h;
-      o = !0;
+      r = !1, u = c();
+    } catch (d) {
+      if (d !== ee)
+        throw d;
+      r = !0;
     } finally {
       M.c = null;
     }
-    return l;
-  }, cleanEffects: (f) => (a(It, f), () => (a(ae, f), () => {
-    a(Rt, f);
-  })), isSuspense: r };
-}, F = Symbol.for, le = queueMicrotask;
-function _t(e, t) {
-  const s = e.length;
-  if (s !== t.length)
+    return u;
+  }, cleanEffects: (c) => (a(Rt, c), () => (a(ne, c), () => {
+    a(It, c);
+  })), isSuspense: o };
+}, F = Symbol.for, re = queueMicrotask;
+function Lt(e, t) {
+  const n = e.length;
+  if (n !== t.length)
     return !1;
-  for (let n = 0; n < s; n++) {
-    let o = e[n], r = t[n];
-    if (o !== r)
+  for (let s = 0; s < n; s++) {
+    let r = e[s], o = t[s];
+    if (r !== o)
       return !1;
   }
   return !0;
 }
-const v = (e) => typeof e == "function", I = (e) => typeof e == "object", { isArray: ue } = Array, tt = (e, t) => (t ? e instanceof HTMLStyleElement : !0) && "hydrate" in (e?.dataset || {});
-function Lt(e, t) {
-  let s;
-  const n = (o) => {
-    let { length: r } = o;
-    for (let a = 0; a < r; a++) {
-      const c = o[a];
-      if (c && Array.isArray(c))
-        n(c);
+const N = (e) => typeof e == "function", R = (e) => typeof e == "object", { isArray: ae } = Array, et = (e, t) => (t ? e instanceof HTMLStyleElement : !0) && "hydrate" in (e?.dataset || {});
+function Ut(e, t) {
+  let n;
+  const s = (r) => {
+    let { length: o } = r;
+    for (let a = 0; a < o; a++) {
+      const f = r[a];
+      if (f && Array.isArray(f))
+        s(f);
       else {
-        const u = typeof c;
-        if (c == null || u === "function" || u === "boolean")
+        const i = typeof f;
+        if (f == null || i === "function" || i === "boolean")
           continue;
-        u === "string" || u === "number" ? (s == null && (s = ""), s += c) : (s != null && (t(s), s = null), t(c));
+        i === "string" || i === "number" ? (n == null && (n = ""), n += f) : (n != null && (t(n), n = null), t(f));
       }
     }
   };
-  n(e), s != null && t(s);
+  s(e), n != null && t(n);
 }
-const xt = (e, t, s) => (e.addEventListener(t, s), () => e.removeEventListener(t, s));
-class $t {
+const _t = (e, t, n) => (e.addEventListener(t, n), () => e.removeEventListener(t, n));
+class jt {
   /**
    *
    * @param {HTMLElement} target
    * @param {string} message
    * @param {string} value
    */
-  constructor(t, s, n) {
-    this.message = s, this.target = t, this.value = n;
+  constructor(t, n, s) {
+    this.message = n, this.target = t, this.value = s;
   }
 }
-class jt extends $t {
+class xt extends jt {
 }
-class fe extends $t {
+class ie extends jt {
 }
-const q = "Custom", de = null, he = { true: 1, "": 1, 1: 1 };
-function me(e, t, s, n, o) {
+const B = "Custom", ce = null, le = { true: 1, "": 1, 1: 1 };
+function ue(e, t, n, s, r) {
   const {
-    type: r,
+    type: o,
     reflect: a,
-    event: c,
-    value: u,
-    attr: f = ye(t)
-  } = s?.name != q && I(s) && s != de ? s : { type: s }, l = r?.name === q && r.map, h = u != null ? r == Function || !v(u) ? () => u : u : null;
+    event: f,
+    value: i,
+    attr: c = fe(t)
+  } = n?.name != B && R(n) && n != ce ? n : { type: n }, u = o?.name === B && o.map, d = i != null ? o == Function || !N(i) ? () => i : i : null;
   Object.defineProperty(e, t, {
     configurable: !0,
     /**
      * @this {import("dom").AtomicoThisInternal}
      * @param {any} newValue
      */
-    set(i) {
-      const d = this[t];
-      h && r != Boolean && i == null && (i = h());
-      const { error: p, value: D } = (l ? ge : De)(
-        r,
-        i
+    set(l) {
+      const m = this[t];
+      d && o != Boolean && l == null && (l = d());
+      const { error: p, value: y } = (u ? me : ye)(
+        o,
+        l
       );
-      if (p && D != null)
-        throw new jt(
+      if (p && y != null)
+        throw new xt(
           this,
-          `The value defined for prop '${t}' must be of type '${r.name}'`,
-          D
+          `The value defined for prop '${t}' must be of type '${o.name}'`,
+          y
         );
-      d != D && (this._props[t] = D ?? void 0, this.update(), c && Yt(this, c), this.updated.then(() => {
-        a && (this._ignoreAttr = f, pe(this, r, f, this[t]), this._ignoreAttr = null);
+      m != y && (this._props[t] = y ?? void 0, this.update(), f && Bt(this, f), this.updated.then(() => {
+        a && (this._ignoreAttr = c, de(this, o, c, this[t]), this._ignoreAttr = null);
       }));
     },
     /**
@@ -144,21 +144,21 @@ function me(e, t, s, n, o) {
     get() {
       return this._props[t];
     }
-  }), h && (o[t] = h()), n[f] = { prop: t, type: r };
+  }), d && (r[t] = d()), s[c] = { prop: t, type: o };
 }
-const Yt = (e, { type: t, base: s = CustomEvent, ...n }) => e.dispatchEvent(new s(t, n)), ye = (e) => e.replace(/([A-Z])/g, "-$1").toLowerCase(), pe = (e, t, s, n) => n == null || t == Boolean && !n ? e.removeAttribute(s) : e.setAttribute(
-  s,
-  t?.name === q && t?.serialize ? t?.serialize(n) : I(n) ? JSON.stringify(n) : t == Boolean ? "" : n
-), be = (e, t) => e == Boolean ? !!he[t] : e == Number ? Number(t) : e == String ? t : e == Array || e == Object ? JSON.parse(t) : e.name == q ? t : (
+const Bt = (e, { type: t, base: n = CustomEvent, ...s }) => e.dispatchEvent(new n(t, s)), fe = (e) => e.replace(/([A-Z])/g, "-$1").toLowerCase(), de = (e, t, n, s) => s == null || t == Boolean && !s ? e.removeAttribute(n) : e.setAttribute(
+  n,
+  t?.name === B && t?.serialize ? t?.serialize(s) : R(s) ? JSON.stringify(s) : t == Boolean ? "" : s
+), he = (e, t) => e == Boolean ? !!le[t] : e == Number ? Number(t) : e == String ? t : e == Array || e == Object ? JSON.parse(t) : e.name == B ? t : (
   // TODO: If when defining reflect the prop can also be of type string?
   new e(t)
-), ge = ({ map: e }, t) => {
+), me = ({ map: e }, t) => {
   try {
     return { value: e(t), error: !1 };
   } catch {
     return { value: t, error: !0 };
   }
-}, De = (e, t) => e == null || t == null ? { value: t, error: !1 } : e != String && t === "" ? { value: void 0, error: !1 } : e == Object || e == Array || e == Symbol ? {
+}, ye = (e, t) => e == null || t == null ? { value: t, error: !1 } : e != String && t === "" ? { value: void 0, error: !1 } : e == Object || e == Array || e == Symbol ? {
   value: t,
   error: {}.toString.call(t) !== `[object ${e.name}]`
 } : t instanceof e ? {
@@ -168,59 +168,59 @@ const Yt = (e, { type: t, base: s = CustomEvent, ...n }) => e.dispatchEvent(new 
   value: t,
   error: e == Number ? typeof t != "number" ? !0 : Number.isNaN(t) : e == String ? typeof t != "string" : typeof t != "boolean"
 } : { value: t, error: !0 };
-let we = 0;
-const Ee = (e) => {
+let pe = 0;
+const be = (e) => {
   const t = (e?.dataset || {})?.hydrate || "";
-  return t || "c" + we++;
-}, x = (e, t = HTMLElement) => {
-  const s = {}, n = {}, o = "prototype" in t && t.prototype instanceof Element, r = o ? t : "base" in t ? t.base : HTMLElement, { props: a, styles: c } = o ? e : t;
-  class u extends r {
+  return t || "c" + pe++;
+}, _ = (e, t = HTMLElement) => {
+  const n = {}, s = {}, r = "prototype" in t && t.prototype instanceof Element, o = r ? t : "base" in t ? t.base : HTMLElement, { props: a, styles: f } = r ? e : t;
+  class i extends o {
     constructor() {
       super(), this._setup(), this._render = () => e({ ...this._props });
-      for (const l in n)
-        this[l] = n[l];
+      for (const u in s)
+        this[u] = s[u];
     }
     /**
      * @returns {import("core").Sheets[]}
      */
     static get styles() {
-      return [super.styles, c];
+      return [super.styles, f];
     }
     async _setup() {
       if (this._props)
         return;
       this._props = {};
-      let l, h;
+      let u, d;
       this.mounted = new Promise(
-        (m) => this.mount = () => {
-          m(), l != this.parentNode && (h != l ? this.unmounted.then(this.update) : this.update()), l = this.parentNode;
+        (D) => this.mount = () => {
+          D(), u != this.parentNode && (d != u ? this.unmounted.then(this.update) : this.update()), u = this.parentNode;
         }
       ), this.unmounted = new Promise(
-        (m) => this.unmount = () => {
-          m(), (l != this.parentNode || !this.isConnected) && (i.cleanEffects(!0)()(), h = this.parentNode, l = null);
+        (D) => this.unmount = () => {
+          D(), (u != this.parentNode || !this.isConnected) && (l.cleanEffects(!0)()(), d = this.parentNode, u = null);
         }
       ), this.symbolId = this.symbolId || Symbol(), this.symbolIdParent = Symbol();
-      const i = ce(
+      const l = oe(
         () => this.update(),
         this,
-        Ee(this)
+        be(this)
       );
-      let d, p = !0;
-      const D = tt(this);
-      this.update = () => (d || (d = !0, this.updated = (this.updated || this.mounted).then(() => {
+      let m, p = !0;
+      const y = et(this);
+      this.update = () => (m || (m = !0, this.updated = (this.updated || this.mounted).then(() => {
         try {
-          const m = i.load(this._render), w = i.cleanEffects();
-          return m && //@ts-ignore
-          m.render(this, this.symbolId, D), d = !1, p && !i.isSuspense() && (p = !1, !D && ve(this)), w();
+          const D = l.load(this._render), h = l.cleanEffects();
+          return D && //@ts-ignore
+          D.render(this, this.symbolId, y), m = !1, p && !l.isSuspense() && (p = !1, !y && ge(this)), h();
         } finally {
-          d = !1;
+          m = !1;
         }
       }).then(
         /**
          * @param {import("internal/hooks.js").CleanUseEffects} [cleanUseEffect]
          */
-        (m) => {
-          m && m();
+        (D) => {
+          D && D();
         }
       )), this.updated), this.update();
     }
@@ -236,74 +236,74 @@ const Ee = (e) => {
      * @param {(string|null)} oldValue
      * @param {(string|null)} value
      */
-    attributeChangedCallback(l, h, i) {
-      if (s[l]) {
-        if (l === this._ignoreAttr || h === i)
+    attributeChangedCallback(u, d, l) {
+      if (n[u]) {
+        if (u === this._ignoreAttr || d === l)
           return;
-        const { prop: d, type: p } = s[l];
+        const { prop: m, type: p } = n[u];
         try {
-          this[d] = be(p, i);
+          this[m] = he(p, l);
         } catch {
-          throw new fe(
+          throw new ie(
             this,
-            `The value defined as attr '${l}' cannot be parsed by type '${p.name}'`,
-            i
+            `The value defined as attr '${u}' cannot be parsed by type '${p.name}'`,
+            l
           );
         }
       } else
-        super.attributeChangedCallback(l, h, i);
+        super.attributeChangedCallback(u, d, l);
     }
     static get props() {
       return { ...super.props, ...a };
     }
     static get observedAttributes() {
-      const l = super.observedAttributes || [];
-      for (const h in a)
-        me(this.prototype, h, a[h], s, n);
-      return Object.keys(s).concat(l);
+      const u = super.observedAttributes || [];
+      for (const d in a)
+        ue(this.prototype, d, a[d], n, s);
+      return Object.keys(n).concat(u);
     }
   }
-  return u;
+  return i;
 };
-function ve(e) {
-  const { styles: t } = e.constructor, { shadowRoot: s } = e;
-  if (s && t.length) {
-    const n = [];
-    Lt(t, (o) => {
-      o && (o instanceof Element ? s.appendChild(o.cloneNode(!0)) : n.push(o));
-    }), n.length && (s.adoptedStyleSheets = n);
+function ge(e) {
+  const { styles: t } = e.constructor, { shadowRoot: n } = e;
+  if (n && t.length) {
+    const s = [];
+    Ut(t, (r) => {
+      r && (r instanceof Element ? n.appendChild(r.cloneNode(!0)) : s.push(r));
+    }), s.length && (n.adoptedStyleSheets = s);
   }
 }
-const qt = (e) => (t, s) => {
-  O(
+const qt = (e) => (t, n) => {
+  A(
     /**
      * Clean the effect hook
      * @type {import("internal/hooks.js").CollectorEffect}
      */
-    ([n, o] = []) => ((o || !o) && (o && _t(o, s) ? n = n || !0 : (v(n) && n(), n = null)), [n, s]),
+    ([s, r] = []) => ((r || !r) && (r && Lt(r, n) ? s = s || !0 : (N(s) && s(), s = null)), [s, n]),
     /**
      * @returns {any}
      */
-    ([n, o], r) => r ? (v(n) && n(), []) : [n || t(), o],
+    ([s, r], o) => o ? (N(s) && s(), []) : [s || t(), r],
     e
   );
-}, $ = qt(Rt), Se = qt(It);
-class Wt extends Array {
+}, rt = qt(It), De = qt(Rt);
+class Yt extends Array {
   /**
    *
    * @param {any} initialState
    * @param {(nextState: any, state:any[], mount: boolean )=>void} mapState
    */
-  constructor(t, s) {
-    let n = !0;
-    const o = (r) => {
+  constructor(t, n) {
+    let s = !0;
+    const r = (o) => {
       try {
-        s(r, this, n);
+        n(o, this, s);
       } finally {
-        n = !1;
+        s = !1;
       }
     };
-    super(void 0, o, s), o(t);
+    super(void 0, r, n), r(t);
   }
   /**
    * The following code allows a mutable approach to useState
@@ -318,45 +318,45 @@ class Wt extends Array {
   //     this[2](nextState, this);
   // }
 }
-const it = (e) => {
-  const t = Ut();
-  return O(
-    (s = new Wt(e, (n, o, r) => {
-      n = v(n) ? n(o[0]) : n, n !== o[0] && (o[0] = n, r || t());
-    })) => s
+const at = (e) => {
+  const t = $t();
+  return A(
+    (n = new Yt(e, (s, r, o) => {
+      s = N(s) ? s(r[0]) : s, s !== r[0] && (r[0] = s, o || t());
+    })) => n
   );
-}, C = (e, t) => {
-  const [s] = O(([n, o, r = 0] = []) => ((!o || o && !_t(o, t)) && (n = e()), [n, t, r]));
-  return s;
-}, ct = (e) => {
-  const { current: t } = L();
+}, T = (e, t) => {
+  const [n] = A(([s, r, o = 0] = []) => ((!r || r && !Lt(r, t)) && (s = e()), [s, t, o]));
+  return n;
+}, it = (e) => {
+  const { current: t } = U();
   if (!(e in t))
-    throw new jt(
+    throw new xt(
       t,
       `For useProp("${e}"), the prop does not exist on the host.`,
       e
     );
-  return O(
-    (s = new Wt(t[e], (n, o) => {
-      n = v(n) ? n(t[e]) : n, t[e] = n;
-    })) => (s[0] = t[e], s)
+  return A(
+    (n = new Yt(t[e], (s, r) => {
+      s = N(s) ? s(t[e]) : s, t[e] = s;
+    })) => (n[0] = t[e], n)
   );
-}, S = (e, t = {}) => {
-  const s = L();
-  return s[e] || (s[e] = (n = t.detail) => Yt(s.current, {
+}, C = (e, t = {}) => {
+  const n = U();
+  return n[e] || (n[e] = (s = t.detail) => Bt(n.current, {
     type: e,
     ...t,
-    detail: n
-  })), s[e];
-}, et = F("atomico/options");
-globalThis[et] = globalThis[et] || {
+    detail: s
+  })), n[e];
+}, nt = F("atomico/options");
+globalThis[nt] = globalThis[nt] || {
   sheet: !!document.adoptedStyleSheets
 };
-const lt = globalThis[et], Ne = {
+const ct = globalThis[nt], Ee = {
   checked: 1,
   value: 1,
   selected: 1
-}, Te = {
+}, we = {
   list: 1,
   type: 1,
   size: 1,
@@ -366,197 +366,197 @@ const lt = globalThis[et], Ne = {
   src: 1,
   href: 1,
   slot: 1
-}, Ce = {
+}, ve = {
   shadowDom: 1,
   staticNode: 1,
   cloneNode: 1,
   children: 1,
   key: 1
-}, Y = {}, nt = [];
-class st extends Text {
+}, x = {}, st = [];
+class ot extends Text {
 }
-const Pe = F("atomico/id"), U = F("atomico/type"), Z = F("atomico/ref"), Bt = F("atomico/vnode"), ke = () => {
+const Se = F("atomico/id"), $ = F("atomico/type"), Z = F("atomico/ref"), zt = F("atomico/vnode"), Ne = () => {
 };
-function Me(e, t, s) {
-  return Ht(this, e, t, s);
+function Ce(e, t, n) {
+  return Ht(this, e, t, n);
 }
-const zt = (e, t, ...s) => {
-  const n = t || Y;
-  let { children: o } = n;
-  if (o = o ?? (s.length ? s : nt), e === ke)
-    return o;
-  const r = e ? e instanceof Node ? 1 : (
+const Wt = (e, t, ...n) => {
+  const s = t || x;
+  let { children: r } = s;
+  if (r = r ?? (n.length ? n : st), e === Ne)
+    return r;
+  const o = e ? e instanceof Node ? 1 : (
     //@ts-ignore
     e.prototype instanceof HTMLElement && 2
   ) : 0;
-  if (r === !1 && e instanceof Function)
+  if (o === !1 && e instanceof Function)
     return e(
-      o != nt ? { children: o, ...n } : n
+      r != st ? { children: r, ...s } : s
     );
-  const a = lt.render || Me;
+  const a = ct.render || Ce;
   return {
-    [U]: Bt,
+    [$]: zt,
     type: e,
-    props: n,
-    children: o,
-    key: n.key,
+    props: s,
+    children: r,
+    key: s.key,
     // key for lists by keys
     // define if the node declares its shadowDom
-    shadow: n.shadowDom,
+    shadow: s.shadowDom,
     // allows renderings to run only once
-    static: n.staticNode,
+    static: s.staticNode,
     // defines whether the type is a childNode `1` or a constructor `2`
-    raw: r,
+    raw: o,
     // defines whether to use the second parameter for document.createElement
-    is: n.is,
+    is: s.is,
     // clone the node if it comes from a reference
-    clone: n.cloneNode,
+    clone: s.cloneNode,
     render: a
   };
 };
-function Ht(e, t, s = Pe, n, o) {
-  let r;
-  if (t && t[s] && t[s].vnode == e || e[U] != Bt)
+function Ht(e, t, n = Se, s, r) {
+  let o;
+  if (t && t[n] && t[n].vnode == e || e[$] != zt)
     return t;
-  (e || !t) && (o = o || e.type == "svg", r = e.type != "host" && (e.raw == 1 ? (t && e.clone ? t[Z] : t) != e.type : e.raw == 2 ? !(t instanceof e.type) : t ? t[Z] || t.localName != e.type : !t), r && e.type != null && (e.raw == 1 && e.clone ? (n = !0, t = e.type.cloneNode(!0), t[Z] = e.type) : t = e.raw == 1 ? e.type : e.raw == 2 ? new e.type() : o ? document.createElementNS(
+  (e || !t) && (r = r || e.type == "svg", o = e.type != "host" && (e.raw == 1 ? (t && e.clone ? t[Z] : t) != e.type : e.raw == 2 ? !(t instanceof e.type) : t ? t[Z] || t.localName != e.type : !t), o && e.type != null && (e.raw == 1 && e.clone ? (s = !0, t = e.type.cloneNode(!0), t[Z] = e.type) : t = e.raw == 1 ? e.type : e.raw == 2 ? new e.type() : r ? document.createElementNS(
     "http://www.w3.org/2000/svg",
     e.type
   ) : document.createElement(
     e.type,
     e.is ? { is: e.is } : void 0
   )));
-  const a = t[s] ? t[s] : Y, { vnode: c = Y, cycle: u = 0 } = a;
-  let { fragment: f, handlers: l } = a;
-  const { children: h = nt, props: i = Y } = c;
-  if (l = r ? {} : l || {}, e.static && !r)
+  const a = t[n] ? t[n] : x, { vnode: f = x, cycle: i = 0 } = a;
+  let { fragment: c, handlers: u } = a;
+  const { children: d = st, props: l = x } = f;
+  if (u = o ? {} : u || {}, e.static && !o)
     return t;
   if (e.shadow && !t.shadowRoot && // @ts-ignore
-  t.attachShadow({ mode: "open", ...e.shadow }), e.props != i && Ae(t, i, e.props, l, o), e.children !== h) {
-    const d = e.shadow ? t.shadowRoot : t;
-    f = Fe(
+  t.attachShadow({ mode: "open", ...e.shadow }), e.props != l && ke(t, l, e.props, u, r), e.children !== d) {
+    const m = e.shadow ? t.shadowRoot : t;
+    c = Pe(
       e.children,
       /**
        * @todo for hydration use attribute and send childNodes
        */
-      f,
-      d,
-      s,
+      c,
+      m,
+      n,
       // add support to foreignObject, children will escape from svg
-      !u && n,
-      o && e.type == "foreignObject" ? !1 : o
+      !i && s,
+      r && e.type == "foreignObject" ? !1 : r
     );
   }
-  return t[s] = { vnode: e, handlers: l, fragment: f, cycle: u + 1 }, t;
+  return t[n] = { vnode: e, handlers: u, fragment: c, cycle: i + 1 }, t;
 }
-function Oe(e, t) {
-  const s = new st(""), n = new st("");
-  let o;
-  if (e[t ? "prepend" : "append"](s), t) {
-    let { lastElementChild: r } = e;
-    for (; r; ) {
-      const { previousElementSibling: a } = r;
-      if (tt(r, !0) && !tt(a, !0)) {
-        o = r;
+function Te(e, t) {
+  const n = new ot(""), s = new ot("");
+  let r;
+  if (e[t ? "prepend" : "append"](n), t) {
+    let { lastElementChild: o } = e;
+    for (; o; ) {
+      const { previousElementSibling: a } = o;
+      if (et(o, !0) && !et(a, !0)) {
+        r = o;
         break;
       }
-      r = a;
+      o = a;
     }
   }
-  return o ? o.before(n) : e.append(n), {
-    markStart: s,
-    markEnd: n
+  return r ? r.before(s) : e.append(s), {
+    markStart: n,
+    markEnd: s
   };
 }
-function Fe(e, t, s, n, o, r) {
-  e = e == null ? null : ue(e) ? e : [e];
-  const a = t || Oe(s, o), { markStart: c, markEnd: u, keyes: f } = a;
-  let l;
-  const h = f && /* @__PURE__ */ new Set();
-  let i = c;
-  if (e && Lt(e, (d) => {
-    if (typeof d == "object" && !d[U])
+function Pe(e, t, n, s, r, o) {
+  e = e == null ? null : ae(e) ? e : [e];
+  const a = t || Te(n, r), { markStart: f, markEnd: i, keyes: c } = a;
+  let u;
+  const d = c && /* @__PURE__ */ new Set();
+  let l = f;
+  if (e && Ut(e, (m) => {
+    if (typeof m == "object" && !m[$])
       return;
-    const p = d[U] && d.key, D = f && p != null && f.get(p);
-    i != u && i === D ? h.delete(i) : i = i == u ? u : i.nextSibling;
-    const m = f ? D : i;
-    let w = m;
-    if (d[U])
-      w = Ht(d, m, n, o, r);
+    const p = m[$] && m.key, y = c && p != null && c.get(p);
+    l != i && l === y ? d.delete(l) : l = l == i ? i : l.nextSibling;
+    const D = c ? y : l;
+    let h = D;
+    if (m[$])
+      h = Ht(m, D, s, r, o);
     else {
-      const A = d + "";
-      !(w instanceof Text) || w instanceof st ? w = new Text(A) : w.data != A && (w.data = A);
+      const S = m + "";
+      !(h instanceof Text) || h instanceof ot ? h = new Text(S) : h.data != S && (h.data = S);
     }
-    w != i && (f && h.delete(w), !m || f ? (s.insertBefore(w, i), f && i != u && h.add(i)) : m == u ? s.insertBefore(w, u) : (s.replaceChild(w, m), i = w)), p != null && (l = l || /* @__PURE__ */ new Map(), l.set(p, w));
-  }), i = i == u ? u : i.nextSibling, t && i != u)
-    for (; i != u; ) {
-      const d = i;
-      i = i.nextSibling, d.remove();
+    h != l && (c && d.delete(h), !D || c ? (n.insertBefore(h, l), c && l != i && d.add(l)) : D == i ? n.insertBefore(h, i) : (n.replaceChild(h, D), l = h)), p != null && (u = u || /* @__PURE__ */ new Map(), u.set(p, h));
+  }), l = l == i ? i : l.nextSibling, t && l != i)
+    for (; l != i; ) {
+      const m = l;
+      l = l.nextSibling, m.remove();
     }
-  return h && h.forEach((d) => d.remove()), a.keyes = l, a;
+  return d && d.forEach((m) => m.remove()), a.keyes = u, a;
 }
-function Ae(e, t, s, n, o) {
-  for (const r in t)
-    !(r in s) && vt(e, r, t[r], null, o, n);
-  for (const r in s)
-    vt(e, r, t[r], s[r], o, n);
+function ke(e, t, n, s, r) {
+  for (const o in t)
+    !(o in n) && vt(e, o, t[o], null, r, s);
+  for (const o in n)
+    vt(e, o, t[o], n[o], r, s);
 }
-function vt(e, t, s, n, o, r) {
-  if (t = t == "class" && !o ? "className" : t, s = s ?? null, n = n ?? null, t in e && Ne[t] && (s = e[t]), !(n === s || Ce[t] || t[0] == "_"))
+function vt(e, t, n, s, r, o) {
+  if (t = t == "class" && !r ? "className" : t, n = n ?? null, s = s ?? null, t in e && Ee[t] && (n = e[t]), !(s === n || ve[t] || t[0] == "_"))
     if (e.localName === "slot" && t === "assignNode" && "assign" in e)
-      le(() => e.assign(n));
-    else if (t[0] == "o" && t[1] == "n" && (v(n) || v(s)))
-      Re(e, t.slice(2), n, r);
+      re(() => e.assign(s));
+    else if (t[0] == "o" && t[1] == "n" && (N(s) || N(n)))
+      Me(e, t.slice(2), s, o);
     else if (t == "ref")
-      n && (v(n) ? n(e) : n.current = e);
+      s && (N(s) ? s(e) : s.current = e);
     else if (t == "style") {
       const { style: a } = e;
-      s = s || "", n = n || "";
-      const c = I(s), u = I(n);
-      if (c)
-        for (const f in s)
-          if (u)
-            !(f in n) && St(a, f, null);
+      n = n || "", s = s || "";
+      const f = R(n), i = R(s);
+      if (f)
+        for (const c in n)
+          if (i)
+            !(c in s) && St(a, c, null);
           else
             break;
-      if (u)
-        for (const f in n) {
-          const l = n[f];
-          c && s[f] === l || St(a, f, l);
+      if (i)
+        for (const c in s) {
+          const u = s[c];
+          f && n[c] === u || St(a, c, u);
         }
       else
-        a.cssText = n;
+        a.cssText = s;
     } else {
       const a = t[0] == "$" ? t.slice(1) : t;
-      a === t && (!o && !Te[t] && t in e || v(n) || v(s)) ? e[t] = n ?? "" : n == null ? e.removeAttribute(a) : e.setAttribute(
+      a === t && (!r && !we[t] && t in e || N(s) || N(n)) ? e[t] = s ?? "" : s == null ? e.removeAttribute(a) : e.setAttribute(
         a,
-        I(n) ? JSON.stringify(n) : n
+        R(s) ? JSON.stringify(s) : s
       );
     }
 }
-function Re(e, t, s, n) {
-  if (n.handleEvent || (n.handleEvent = (o) => n[o.type].call(e, o)), s) {
-    if (!n[t]) {
-      const o = s.capture || s.once || s.passive ? Object.assign({}, s) : null;
-      e.addEventListener(t, n, o);
+function Me(e, t, n, s) {
+  if (s.handleEvent || (s.handleEvent = (r) => s[r.type].call(e, r)), n) {
+    if (!s[t]) {
+      const r = n.capture || n.once || n.passive ? Object.assign({}, n) : null;
+      e.addEventListener(t, s, r);
     }
-    n[t] = s;
+    s[t] = n;
   } else
-    n[t] && (e.removeEventListener(t, n), delete n[t]);
+    s[t] && (e.removeEventListener(t, s), delete s[t]);
 }
-function St(e, t, s) {
-  let n = "setProperty";
-  s == null && (n = "removeProperty", s = null), ~t.indexOf("-") ? e[n](t, s) : e[t] = s;
+function St(e, t, n) {
+  let s = "setProperty";
+  n == null && (s = "removeProperty", n = null), ~t.indexOf("-") ? e[s](t, n) : e[t] = n;
 }
 const Nt = {};
-function W(e, ...t) {
-  const s = (e.raw || e).reduce(
-    (n, o, r) => n + o + (t[r] || ""),
+function Y(e, ...t) {
+  const n = (e.raw || e).reduce(
+    (s, r, o) => s + r + (t[o] || ""),
     ""
   );
-  return Nt[s] = Nt[s] || Ie(s);
+  return Nt[n] = Nt[n] || Oe(n);
 }
-function Ie(e) {
-  if (lt.sheet) {
+function Oe(e) {
+  if (ct.sheet) {
     const t = new CSSStyleSheet();
     return t.replaceSync(e), t;
   } else {
@@ -564,54 +564,54 @@ function Ie(e) {
     return t.textContent = e, t;
   }
 }
-const Ue = zt("host", { style: "display: contents" }), X = F("atomico/context"), _e = (e, t) => {
-  const s = L();
-  Se(
-    () => xt(
-      s.current,
+const Ae = Wt("host", { style: "display: contents" }), X = F("atomico/context"), Fe = (e, t) => {
+  const n = U();
+  De(
+    () => _t(
+      n.current,
       "ConnectContext",
       /**
        * @param {CustomEvent<import("context").DetailConnectContext>} event
        */
-      (n) => {
-        e === n.detail.id && (n.stopPropagation(), n.detail.connect(t));
+      (s) => {
+        e === s.detail.id && (s.stopPropagation(), s.detail.connect(t));
       }
     ),
     [e]
   );
-}, Le = (e) => {
-  const t = S("ConnectContext", {
+}, Ie = (e) => {
+  const t = C("ConnectContext", {
     bubbles: !0,
     composed: !0
-  }), s = () => {
-    if (lt.ssr)
+  }), n = () => {
+    if (ct.ssr)
       return;
-    let r;
+    let o;
     return t({
       id: e,
       connect(a) {
-        r = a;
+        o = a;
       }
-    }), r;
-  }, [n, o] = it(
-    s
+    }), o;
+  }, [s, r] = at(
+    n
   );
-  return $(() => {
-    n || (e[X] || (e[X] = customElements.whenDefined(
+  return rt(() => {
+    s || (e[X] || (e[X] = customElements.whenDefined(
       new e().localName
     )), e[X].then(
-      () => o(s)
+      () => r(n)
     ));
-  }, [e]), n;
-}, xe = (e) => {
-  const t = Le(e), s = Ut();
-  return $(() => {
+  }, [e]), s;
+}, Re = (e) => {
+  const t = Ie(e), n = $t();
+  return rt(() => {
     if (t)
-      return xt(t, "UpdatedValue", s);
+      return _t(t, "UpdatedValue", n);
   }, [t]), (t || e).value;
 }, $e = (e) => {
-  const t = x(
-    () => (_e(t, L().current), Ue),
+  const t = _(
+    () => (Fe(t, U().current), Ae),
     {
       props: {
         value: {
@@ -623,359 +623,272 @@ const Ue = zt("host", { style: "display: contents" }), X = F("atomico/context"),
     }
   );
   return t.value = e, t;
-}, y = (e, t, s) => (t == null ? t = { key: s } : t.key = s, zt(e, t)), N = y, je = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$/, Kt = "years", Jt = "months", Zt = "days";
-function Ye(e) {
-  if (Kt in e)
-    return { years: -e.years };
-  if (Jt in e)
-    return { months: -e.months };
-  if (Zt in e)
-    return { days: -e.days };
-  throw new TypeError();
+}, b = (e, t, n) => (t == null ? t = { key: n } : t.key = n, Wt(e, t)), P = b, Kt = Y`*,*:before,*:after{box-sizing:border-box}button{padding:0;touch-action:manipulation;cursor:pointer;user-select:none}`, Jt = Y`.vh{position:absolute;transform:scale(0)}`;
+function lt() {
+  return E.from(/* @__PURE__ */ new Date());
 }
-function qe(e, t) {
-  return g.from(new Date(Date.UTC(e.year, e.month - 1, t)));
+function ut(e, t = 0) {
+  const n = v(e), s = n.getUTCDay(), r = (s < t ? 7 : 0) + s - t;
+  return n.setUTCDate(n.getUTCDate() - r), E.from(n);
 }
-function We(e, t) {
-  const s = new g(t, e.month, 1), n = dt(s), o = e.toDate();
-  return o.setUTCFullYear(t), B(g.from(o), s, n);
+function Le(e) {
+  const n = v(e), r = (n.getUTCDay() + 6) % 7;
+  n.setDate(n.getDate() - r + 3);
+  const o = n.valueOf();
+  return n.setMonth(0, 1), n.getDay() !== 4 && n.setMonth(0, 1 + (4 - n.getDay() + 7) % 7), 1 + Math.ceil((o - n.valueOf()) / 6048e5);
 }
-function Be(e, t) {
-  const s = new g(e.year, t, 1), n = dt(s), o = e.toDate();
-  return o.setUTCMonth(t - 1), B(g.from(o), s, n);
+function Zt(e, t = 0) {
+  return ut(e, t).add({ days: 6 });
 }
-function Tt(e, t) {
-  return Zt in t ? qe(e, e.day + t.days) : Jt in t ? Be(e, e.month + t.months) : Kt in t ? We(e, e.year + t.years) : e;
+function Xt(e) {
+  return E.from(new Date(Date.UTC(e.year, e.month, 0)));
 }
-const G = (e, t) => e.toString().padStart(t, "0");
-class g {
-  constructor(t, s, n) {
-    this.year = t, this.month = s, this.day = n;
+function z(e, t, n) {
+  return t && E.compare(e, t) < 0 ? t : n && E.compare(e, n) > 0 ? n : e;
+}
+const Ue = { days: 1 };
+function _e(e, t = 0) {
+  let n = ut(e.toPlainDate(), t);
+  const s = Zt(Xt(e), t), r = [];
+  for (; E.compare(n, s) < 0; ) {
+    const o = [];
+    for (let a = 0; a < 7; a++)
+      o.push(n), n = n.add(Ue);
+    r.push(o);
   }
+  return r;
+}
+function v(e) {
+  return new Date(Date.UTC(e.year, e.month - 1, e.day ?? 1));
+}
+const je = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$/, G = (e, t) => e.toString().padStart(t, "0");
+class E {
+  constructor(t, n, s) {
+    this.year = t, this.month = n, this.day = s;
+  }
+  // this is an incomplete implementation that only handles arithmetic on a single unit at a time.
+  // i didn't want to get into more complex arithmetic since it gets tricky fast
+  // this is enough to serve my needs and will still be a drop-in replacement when actual Temporal API lands
   add(t) {
-    return Tt(this, t);
-  }
-  subtract(t) {
-    return Tt(this, Ye(t));
+    const n = v(this);
+    if ("days" in t)
+      return n.setUTCDate(this.day + t.days), E.from(n);
+    let { year: s, month: r } = this;
+    "months" in t ? (r = this.month + t.months, n.setUTCMonth(r - 1)) : (s = this.year + t.years, n.setUTCFullYear(s));
+    const o = E.from(v({ year: s, month: r, day: 1 }));
+    return z(E.from(n), o, Xt(o));
   }
   toString() {
     return `${G(this.year, 4)}-${G(this.month, 2)}-${G(this.day, 2)}`;
   }
-  toDate() {
-    return new Date(Date.UTC(this.year, this.month - 1, this.day, 0, 0, 0));
-  }
   toPlainYearMonth() {
-    return new k(this.year, this.month);
+    return new W(this.year, this.month);
   }
   equals(t) {
-    return this.year === t.year && this.month === t.month && this.day === t.day;
+    return E.compare(this, t) === 0;
   }
-  static compare(t, s) {
-    return Gt(t, s);
+  static compare(t, n) {
+    return t.year < n.year ? -1 : t.year > n.year ? 1 : t.month < n.month ? -1 : t.month > n.month ? 1 : t.day < n.day ? -1 : t.day > n.day ? 1 : 0;
   }
   static from(t) {
-    return typeof t == "string" ? this.fromString(t) : this.fromDate(t);
-  }
-  static fromString(t) {
-    const s = t.match(je);
-    if (!s)
-      throw new TypeError(t);
-    const [, n, o, r] = s;
-    return new g(
-      parseInt(n, 10),
-      parseInt(o, 10),
-      parseInt(r, 10)
-    );
-  }
-  static fromDate(t) {
-    return new g(
+    if (typeof t == "string") {
+      const n = t.match(je);
+      if (!n)
+        throw new TypeError(t);
+      const [, s, r, o] = n;
+      return new E(
+        Number.parseInt(s, 10),
+        Number.parseInt(r, 10),
+        Number.parseInt(o, 10)
+      );
+    }
+    return new E(
       t.getUTCFullYear(),
       t.getUTCMonth() + 1,
       t.getUTCDate()
     );
   }
 }
-function Ct(e) {
-  return (e.months ?? 0) + (e.years ?? 0) * 12;
-}
-function Pt(e, t) {
-  const s = e.toDate();
-  return s.setUTCMonth(s.getUTCMonth() + t), new k(s.getUTCFullYear(), s.getUTCMonth() + 1);
-}
-class k {
-  constructor(t, s) {
-    this.year = t, this.month = s;
+class W {
+  constructor(t, n) {
+    this.year = t, this.month = n;
   }
   add(t) {
-    return Pt(this, Ct(t));
-  }
-  subtract(t) {
-    return Pt(this, -Ct(t));
-  }
-  toDate() {
-    return new Date(Date.UTC(this.year, this.month - 1, 1));
+    const n = v(this), s = (t.months ?? 0) + (t.years ?? 0) * 12;
+    return n.setUTCMonth(n.getUTCMonth() + s), new W(n.getUTCFullYear(), n.getUTCMonth() + 1);
   }
   equals(t) {
     return this.year === t.year && this.month === t.month;
   }
   toPlainDate() {
-    return new g(this.year, this.month, 1);
-  }
-  static compare(t, s) {
-    const n = t instanceof g ? t.toPlainYearMonth() : t, o = s instanceof g ? s.toPlainYearMonth() : s;
-    return Gt(n, o);
+    return new E(this.year, this.month, 1);
   }
 }
-function ut() {
-  return g.from(/* @__PURE__ */ new Date());
-}
-function ft(e, t = 0) {
-  const s = e.toDate(), n = s.getUTCDay(), o = (n < t ? 7 : 0) + n - t;
-  return s.setUTCDate(s.getUTCDate() - o), g.from(s);
-}
-function ze(e) {
-  const s = e.toDate(), o = (s.getUTCDay() + 6) % 7;
-  s.setDate(s.getDate() - o + 3);
-  const r = s.valueOf();
-  return s.setMonth(0, 1), s.getDay() !== 4 && s.setMonth(0, 1 + (4 - s.getDay() + 7) % 7), 1 + Math.ceil((r - s.valueOf()) / 6048e5);
-}
-function Xt(e, t = 0) {
-  return ft(e, t).add({ days: 6 });
-}
-function dt(e) {
-  return g.from(new Date(Date.UTC(e.year, e.month, 0)));
-}
-function Gt(e, t) {
-  const s = e.toDate(), n = t.toDate();
-  return s < n ? -1 : s > n ? 1 : 0;
-}
-function B(e, t, s) {
-  return t && g.compare(e, t) < 0 ? t : s && g.compare(e, s) > 0 ? s : e;
-}
-function ot(e, t, s) {
-  return B(e, t, s) === e;
-}
-function He(e, t) {
-  const s = { days: 1 }, n = [e];
-  let o = e;
-  for (; !o.equals(t); )
-    o = o.add(s), n.push(o);
-  return n;
-}
-function Ke(e, t) {
-  const s = [];
-  for (let n = 0; n < e.length; n += t)
-    s.push(e.slice(n, n + t));
-  return s;
-}
-function Je(e, t = 0) {
-  const s = ft(e.toPlainDate(), t), n = Xt(dt(e), t);
-  return Ke(He(s, n), 7);
-}
-const Qt = W`*,*:before,*:after{box-sizing:border-box}button{padding:0;touch-action:manipulation}`, Vt = W`.vh{position:absolute;transform:scale(0)}`;
-function rt(e, t) {
+function q(e, t) {
   if (t)
     try {
       return e.from(t);
     } catch {
     }
 }
-function at(e) {
-  const [t, s] = ct(e);
-  return [C(() => rt(g, t), [t]), (r) => s(r.toString())];
+function O(e) {
+  const [t, n] = it(e);
+  return [T(() => q(E, t), [t]), (o) => n(o.toString())];
 }
-function Ze(e) {
-  if (e) {
-    const [t, s] = e.split("/"), n = rt(g, t), o = rt(g, s);
-    if (n && o)
-      return [n, o];
-  }
-  return [];
+function xe(e) {
+  const [t = "", n] = it(e);
+  return [T(() => {
+    const [o, a] = t.split("/"), f = q(E, o), i = q(E, a);
+    return f && i ? [f, i] : [];
+  }, [t]), (o) => n(`${o[0]}/${o[1]}`)];
 }
-function Xe(e, t) {
-  return `${e}/${t}`;
+function Be(e) {
+  const [t = "", n] = it(e);
+  return [T(() => {
+    const o = [];
+    for (const a of t.trim().split(/\s+/)) {
+      const f = q(E, a);
+      f && o.push(f);
+    }
+    return o;
+  }, [t]), (o) => n(o.join(" "))];
 }
-function Ge(e) {
-  const [t, s] = ct(e);
-  return [C(() => Ze(t), [t]), (r) => s(Xe(r[0], r[1]))];
-}
-function Qe(e) {
-  const [t, s] = ct(e);
-  return [C(() => t ? t.split(",").map((r) => g.from(r)) : [], [t]), (r) => s(r.map((a) => a.toString()).join(","))];
-}
-function _(e, t) {
-  return C(
+function L(e, t) {
+  return T(
     () => new Intl.DateTimeFormat(t, { timeZone: "UTC", ...e }),
     [t, e]
   );
 }
-function kt(e, t, s) {
-  const n = _(e, s);
-  return C(() => {
-    const o = [], r = /* @__PURE__ */ new Date();
+function Ct(e, t, n) {
+  const s = L(e, n);
+  return T(() => {
+    const r = [], o = /* @__PURE__ */ new Date();
     for (let a = 0; a < 7; a++) {
-      const c = (r.getDay() - t + 7) % 7;
-      o[c] = n.format(r), r.setDate(r.getDate() + 1);
+      const f = (o.getDay() - t + 7) % 7;
+      r[f] = s.format(o), o.setDate(o.getDate() + 1);
     }
-    return o;
-  }, [t, n]);
+    return r;
+  }, [t, s]);
 }
-function Ve(e) {
-  let t = "";
-  for (const s in e)
-    e[s] && (t += ` ${s}`);
-  return t;
-}
-const Mt = (e) => e.target.matches(":dir(ltr)"), tn = { month: "long", day: "numeric" }, en = { month: "long" }, nn = { weekday: "narrow" }, sn = { weekday: "long" }, Q = { bubbles: !0 };
-function on({ props: e, context: t }) {
-  const { offset: s } = e, { firstDayOfWeek: n, isDateDisallowed: o, min: r, max: a, dateWindow: c, locale: u } = t, f = ut(), l = kt(sn, n, u), h = kt(nn, n, u), i = _(tn, u), d = _(en, u), { focusedDate: p } = c, D = C(
-    () => c.start.add({ months: s }),
-    [c, s]
-  ), m = C(
-    () => Je(D, n),
-    [D, n]
-  ), w = S("focusday", Q), A = S("selectday", Q), te = S("hoverday", Q);
-  function gt(b) {
-    w(B(b, r, a));
+const Tt = (e, t, n) => z(e, t, n) === e, Pt = (e) => e.target.matches(":dir(ltr)"), qe = { month: "long", day: "numeric" }, Ye = { month: "long" }, ze = { weekday: "narrow" }, We = { weekday: "long" }, Q = { bubbles: !0 };
+function He({ props: e, context: t }) {
+  const { offset: n } = e, {
+    firstDayOfWeek: s,
+    isDateDisallowed: r,
+    min: o,
+    max: a,
+    page: f,
+    locale: i,
+    focusedDate: c
+  } = t, u = lt(), d = Ct(We, s, i), l = Ct(ze, s, i), m = L(qe, i), p = L(Ye, i), y = T(
+    () => f.start.add({ months: n }),
+    [f, n]
+  ), D = T(
+    () => _e(y, s),
+    [y, s]
+  ), h = C("focusday", Q), S = C("selectday", Q), H = C("hoverday", Q);
+  function pt(g) {
+    h(z(g, o, a));
   }
-  function ee(b) {
-    let E;
-    switch (b.key) {
+  function Gt(g) {
+    let w;
+    switch (g.key) {
       case "ArrowRight":
-        E = p.add({ days: Mt(b) ? 1 : -1 });
+        w = c.add({ days: Pt(g) ? 1 : -1 });
         break;
       case "ArrowLeft":
-        E = p.add({ days: Mt(b) ? -1 : 1 });
+        w = c.add({ days: Pt(g) ? -1 : 1 });
         break;
       case "ArrowDown":
-        E = p.add({ days: 7 });
+        w = c.add({ days: 7 });
         break;
       case "ArrowUp":
-        E = p.add({ days: -7 });
+        w = c.add({ days: -7 });
         break;
       case "PageUp":
-        E = p.add(b.shiftKey ? { years: -1 } : { months: -1 });
+        w = c.add(g.shiftKey ? { years: -1 } : { months: -1 });
         break;
       case "PageDown":
-        E = p.add(b.shiftKey ? { years: 1 } : { months: 1 });
+        w = c.add(g.shiftKey ? { years: 1 } : { months: 1 });
         break;
       case "Home":
-        E = ft(p, n);
+        w = ut(c, s);
         break;
       case "End":
-        E = Xt(p, n);
+        w = Zt(c, s);
         break;
       default:
         return;
     }
-    gt(E), b.preventDefault();
+    pt(w), g.preventDefault();
   }
-  function ne(b) {
-    const E = D.equals(b), se = b.equals(p), Dt = b.equals(f), wt = b.toDate(), j = o?.(wt), z = !ot(b, r, a);
-    let P = !1, Et = !1, H = !1, K = !1;
-    if ("highlightedRange" in t) {
-      const [R, J] = t.highlightedRange;
-      Et = !0, H = R?.equals(b) ?? !1, K = J?.equals(b) ?? !1, P = R && J ? ot(b, R, J) : !1;
+  function Qt(g) {
+    const w = y.equals(g);
+    if (!t.showOutsideDays && !w)
+      return;
+    const Vt = g.equals(c), bt = g.equals(u), gt = v(g), j = r?.(gt), K = !Tt(g, o, a);
+    let Dt = "", k;
+    if (t.type === "range") {
+      const [I, J] = t.value, Et = I?.equals(g), wt = J?.equals(g);
+      k = I && J && Tt(g, I, J), Dt = `${Et ? "range-start" : ""} ${wt ? "range-end" : ""} ${k && !Et && !wt ? "range-inner" : ""}`;
     } else
-      "selectedDates" in t ? P = t.selectedDates?.some((R) => R.equals(b)) ?? !1 : "value" in t && (P = t.value?.equals(b) ?? !1);
+      t.type === "multi" ? k = t.value.some((I) => I.equals(g)) : k = t.value?.equals(g);
     return {
-      part: Ve({
-        button: !0,
-        day: !0,
-        selected: E && P,
-        today: Dt,
-        disallowed: j,
-        disabled: z,
-        outside: !E,
-        "range-start": H,
-        "range-end": K,
-        "range-inner": Et && P && !H && !K
-      }),
-      tabindex: E && se ? 0 : -1,
-      disabled: z,
+      part: `${`button day ${// we don't want outside days to ever be shown as selected
+      w ? k ? "selected" : "" : "outside"} ${j ? "disallowed" : ""} ${K ? "disabled" : ""} ${bt ? "today" : ""}`} ${Dt}`,
+      tabindex: w && Vt ? 0 : -1,
+      disabled: K,
       "aria-disabled": j ? "true" : void 0,
-      "aria-pressed": E && P,
-      "aria-current": Dt ? "date" : void 0,
-      "aria-label": i.format(wt),
-      onkeydown: ee,
+      "aria-pressed": w && k,
+      "aria-current": bt ? "date" : void 0,
+      "aria-label": m.format(gt),
+      onkeydown: Gt,
       onclick() {
-        !j && !t.readonly && A(b), gt(b);
+        !j && !t.readonly && S(g), pt(g);
       },
       onmouseover() {
-        !j && !z && te(b);
+        !j && !K && H(g);
       }
     };
   }
   return {
-    weeks: m,
-    yearMonth: D,
-    dayNamesLong: l,
-    dayNamesShort: h,
-    monthFormatter: d,
-    getDayProps: ne
+    weeks: D,
+    yearMonth: y,
+    daysLong: d,
+    daysShort: l,
+    formatter: p,
+    getDayProps: Qt
   };
 }
-class T {
-  constructor(t, s, n) {
-    this.start = t, this.duration = s, this.focusedDate = n, this.end = t.add({ months: s.months - 1 });
-  }
-  end;
-  contains(t) {
-    return k.compare(t, this.start) >= 0 && k.compare(t, this.end) <= 0;
-  }
-  adjust(t) {
-    const { start: s, duration: n } = this, o = k.compare(s, t) > 0;
-    let r = new T(s, n, t);
-    for (; !r.contains(t); )
-      r = new T(
-        o ? r.start.subtract(n) : r.start.add(n),
-        n,
-        t
-      );
-    return r;
-  }
-  next() {
-    return new T(
-      this.start.add(this.duration),
-      this.duration,
-      this.focusedDate.add(this.duration)
-    );
-  }
-  prev() {
-    return new T(
-      this.start.subtract(this.duration),
-      this.duration,
-      this.focusedDate.subtract(this.duration)
-    );
-  }
-}
-const Ot = ut(), ht = $e({
-  firstDayOfWeek: 0,
+const V = lt(), ft = $e({
+  type: "date",
+  firstDayOfWeek: 1,
   isDateDisallowed: () => !1,
-  dateWindow: new T(Ot.toPlainYearMonth(), { months: 1 }, Ot)
+  focusedDate: V,
+  page: { start: V.toPlainYearMonth(), end: V.toPlainYearMonth() }
 });
-customElements.define("calendar-month-ctx", ht);
-const rn = x(
+customElements.define("calendar-month-ctx", ft);
+const Ke = _(
   (e) => {
-    const t = xe(ht), s = ie(), n = on({ props: e, context: t });
-    function o() {
-      s.current.querySelector("button[tabindex='0']")?.focus();
+    const t = Re(ft), n = se(), s = He({ props: e, context: t });
+    function r() {
+      n.current.querySelector("button[tabindex='0']")?.focus();
     }
-    return /* @__PURE__ */ N("host", { shadowDom: !0, focus: o, children: [
-      /* @__PURE__ */ y("div", { id: "heading", part: "heading", children: n.monthFormatter.format(n.yearMonth.toDate()) }),
-      /* @__PURE__ */ N("table", { ref: s, "aria-labelledby": "heading", part: "table", children: [
-        /* @__PURE__ */ y("thead", { children: /* @__PURE__ */ N("tr", { part: "tr head", children: [
-          t.showWeekNumbers && /* @__PURE__ */ y("th", { part: "th", scope: "col", children: /* @__PURE__ */ y("span", { class: "vh", "aria-hidden": "true" }) }),
-          n.dayNamesLong.map((r, a) => /* @__PURE__ */ N("th", { part: "th", scope: "col", children: [
-            /* @__PURE__ */ y("span", { class: "vh", children: r }),
-            /* @__PURE__ */ y("span", { "aria-hidden": "true", children: n.dayNamesShort[a] })
+    return /* @__PURE__ */ P("host", { shadowDom: !0, focus: r, children: [
+      /* @__PURE__ */ b("div", { id: "h", part: "heading", children: s.formatter.format(v(s.yearMonth)) }),
+      /* @__PURE__ */ P("table", { ref: n, "aria-labelledby": "h", part: "table", children: [
+        /* @__PURE__ */ b("thead", { children: /* @__PURE__ */ P("tr", { part: "tr head", children: [
+          t.showWeekNumbers && /* @__PURE__ */ b("th", { part: "th", scope: "col", children: /* @__PURE__ */ b("span", { class: "vh", "aria-hidden": "true" }) }),
+          s.daysLong.map((o, a) => /* @__PURE__ */ P("th", { part: "th", scope: "col", children: [
+            /* @__PURE__ */ b("span", { class: "vh", children: o }),
+            /* @__PURE__ */ b("span", { "aria-hidden": "true", children: s.daysShort[a] })
           ] }))
         ] }) }),
-        /* @__PURE__ */ y("tbody", { children: n.weeks.map((r, a) => /* @__PURE__ */ N("tr", { part: "tr week", children: [
-          t.showWeekNumbers && r[0] && /* @__PURE__ */ y("td", { class: "weeknumber", part: "td weeknumber", children: t.formatWeekNumbers ? t.formatWeekNumbers(ze(r[0])) : r[0] }),
-          r.map((c, u) => {
-            const f = n.yearMonth.equals(c), l = t.showOutsideDays || f;
-            return /* @__PURE__ */ y("td", { part: "td", children: l && /* @__PURE__ */ y("button", { ...n.getDayProps(c), children: c.day }) }, u);
+        /* @__PURE__ */ b("tbody", { children: s.weeks.map((o, a) => /* @__PURE__ */ P("tr", { part: "tr week", children: [
+          t.showWeekNumbers && o[0] && /* @__PURE__ */ b("td", { class: "weeknumber", part: "td weeknumber", children: t.formatWeekNumbers ? t.formatWeekNumbers(Le(o[0])) : o[0] }),
+          o.map((f, i) => {
+            const c = s.yearMonth.equals(f), u = t.showOutsideDays || c;
+            return /* @__PURE__ */ b("td", { part: "td", children: u && /* @__PURE__ */ b("button", { ...s.getDayProps(f), children: f.day }) }, i);
           })
         ] }, a)) })
       ] })
@@ -989,58 +902,56 @@ const rn = x(
       }
     },
     styles: [
-      Qt,
-      Vt,
-      W`:host{--color-accent: black;--color-text-on-accent: white;display:flex;flex-direction:column;gap:.25rem;text-align:center;inline-size:fit-content}table{border-collapse:collapse;border-spacing:0;table-layout:fixed;inline-size:max-content;font-size:.875rem}th{font-weight:700;block-size:2.25rem;min-width:36px}td{padding-inline:0;padding-block:1px;min-width:36px}td.weeknumber{font-size:.875em}button{color:inherit;font-size:inherit;background:transparent;border:0;cursor:pointer;font-variant-numeric:tabular-nums;block-size:2.25rem;inline-size:2.25rem}button:hover:where(:not(:disabled)){background:#0000000d}button:is([aria-pressed=true],:focus-visible){background:var(--color-accent);color:var(--color-text-on-accent)}button:focus-visible{outline:1px solid var(--color-text-on-accent);outline-offset:-2px}button:disabled,:host::part(outside),:host::part(disallowed){cursor:default;opacity:.5}:host::part(disallowed){text-decoration:line-through}`
+      Kt,
+      Jt,
+      Y`:host{--color-accent: black;--color-text-on-accent: white;display:flex;flex-direction:column;gap:.25rem;text-align:center;inline-size:fit-content}table{border-collapse:collapse;border-spacing:0;table-layout:fixed;inline-size:max-content;font-size:.875rem}th{font-weight:700;block-size:2.25rem;min-width:36px}td{padding-inline:0;padding-block:1px;min-width:36px}td.weeknumber{font-size:.875em}button{color:inherit;font-size:inherit;background:transparent;border:0;cursor:pointer;font-variant-numeric:tabular-nums;block-size:2.25rem;inline-size:2.25rem}button:hover:where(:not(:disabled,[aria-disabled])){background:#0000000d}button:is([aria-pressed=true],:focus-visible){background:var(--color-accent);color:var(--color-text-on-accent)}button:focus-visible{outline:1px solid var(--color-text-on-accent);outline-offset:-2px}button:disabled,:host::part(outside),:host::part(disallowed){cursor:default;opacity:.5}:host::part(disallowed){text-decoration:line-through}`
     ]
   }
 );
-customElements.define("calendar-month", rn);
-function mt(e) {
-  const t = e.dateWindow.start.toDate(), s = e.dateWindow.end.toDate();
-  return /* @__PURE__ */ N("div", { role: "group", "aria-labelledby": "label", part: "container", children: [
-    /* @__PURE__ */ y("div", { id: "label", class: "vh", "aria-live": "polite", "aria-atomic": "true", children: e.formatVerbose.formatRange(t, s) }),
-    /* @__PURE__ */ N("div", { class: "header", part: "header", children: [
-      e.disableNavigation ? null : /* @__PURE__ */ y(
-        "button",
-        {
-          part: `button previous ${e.previous ? "" : "disabled"}`,
-          onclick: e.previous,
-          "aria-disabled": e.previous ? null : "true",
-          children: /* @__PURE__ */ y("slot", { name: "previous", children: "Previous" })
-        }
-      ),
-      /* @__PURE__ */ y("div", { id: "heading", part: "heading", "aria-hidden": "true", children: e.format.formatRange(t, s) }),
-      e.disableNavigation ? null : /* @__PURE__ */ y(
-        "button",
-        {
-          part: `button next ${e.next ? "" : "disabled"}`,
-          onclick: e.next,
-          "aria-disabled": e.next ? null : "true",
-          children: /* @__PURE__ */ y("slot", { name: "next", children: "Next" })
-        }
-      )
+customElements.define("calendar-month", Ke);
+function kt(e) {
+  return (
+    // biome-ignore lint/a11y/useButtonType: <explanation>
+    /* @__PURE__ */ b(
+      "button",
+      {
+        part: `button ${e.name} ${e.onclick ? "" : "disabled"}`,
+        onclick: e.onclick,
+        "aria-disabled": e.onclick ? null : "true",
+        children: /* @__PURE__ */ b("slot", { name: e.name, children: e.children })
+      }
+    )
+  );
+}
+function dt(e) {
+  const t = v(e.page.start), n = v(e.page.end);
+  return /* @__PURE__ */ P("div", { role: "group", "aria-labelledby": "h", part: "container", children: [
+    /* @__PURE__ */ b("div", { id: "h", class: "vh", "aria-live": "polite", "aria-atomic": "true", children: e.formatVerbose.formatRange(t, n) }),
+    /* @__PURE__ */ P("div", { part: "header", children: [
+      e.disableNavigation ? null : /* @__PURE__ */ b(kt, { name: "previous", onclick: e.previous, children: "Previous" }),
+      /* @__PURE__ */ b("slot", { part: "heading", name: "heading", children: /* @__PURE__ */ b("div", { "aria-hidden": "true", children: e.format.formatRange(t, n) }) }),
+      e.disableNavigation ? null : /* @__PURE__ */ b(kt, { name: "next", onclick: e.next, children: "Next" })
     ] }),
-    /* @__PURE__ */ y(
-      ht,
+    /* @__PURE__ */ b(
+      ft,
       {
         value: e,
         onselectday: e.onSelect,
         onfocusday: e.onFocus,
         onhoverday: e.onHover,
-        children: /* @__PURE__ */ y("slot", {})
+        children: /* @__PURE__ */ b("slot", {})
       }
     )
   ] });
 }
-const yt = {
+const ht = {
   value: {
     type: String,
     value: ""
   },
   readonly: {
     type: Boolean,
-    value: () => !1
+    value: !1
   },
   min: {
     type: String,
@@ -1060,11 +971,11 @@ const yt = {
   },
   showOutsideDays: {
     type: Boolean,
-    value: () => !1
+    value: !1
   },
   showWeekNumbers: {
     type: Boolean,
-    value: () => !1
+    value: !1
   },
   formatWeekNumbers: {
     type: Function,
@@ -1081,136 +992,161 @@ const yt = {
   },
   disableNavigation: {
     type: Boolean,
-    value: () => !1
+    value: !1
+  },
+  focusedDate: {
+    type: String,
+    value: () => {
+    }
   }
-}, pt = [
-  Qt,
-  Vt,
-  W`:host{display:block;inline-size:fit-content}[role=group]{display:flex;flex-direction:column;gap:1em}.header{display:flex;align-items:center;justify-content:space-between}#heading{font-weight:700;font-size:1.25em;margin:auto}button{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:center}button[aria-disabled]{cursor:default;opacity:.4}`
-], an = { year: "numeric" }, cn = { year: "numeric", month: "long" };
-function bt({ months: e, locale: t }) {
-  const [s] = at("min"), [n] = at("max"), o = S("focusday"), r = S("change"), [a, c] = it(() => {
-    const m = ut(), w = e === 12 ? new k(m.year, 1) : m.toPlainYearMonth();
-    return new T(w, { months: e }, m);
-  });
-  function u(m) {
-    c(m), o(m.focusedDate.toDate());
-  }
-  function f(m) {
-    c(a.adjust(m));
-  }
-  const l = L();
-  function h() {
-    l.current.querySelectorAll("calendar-month").forEach((m) => m.focus());
-  }
-  const i = _(an, t), d = _(cn, t), p = n == null || !a.contains(n), D = s == null || !a.contains(s);
+}, mt = [
+  Kt,
+  Jt,
+  Y`:host{display:block;inline-size:fit-content}[role=group]{display:flex;flex-direction:column;gap:1em}:host::part(header){display:flex;align-items:center;justify-content:space-between}:host::part(heading){display:flex;margin:auto;font-weight:700;font-size:1.25em}button{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:center}button[aria-disabled]{cursor:default;opacity:.5}`
+], Je = { year: "numeric" }, Ze = { year: "numeric", month: "long" };
+function Mt(e, t) {
+  return (t.year - e.year) * 12 + t.month - e.month;
+}
+const Ot = (e, t) => {
+  const n = t === 12 ? new W(e.year, 1) : e;
   return {
-    format: i,
-    formatVerbose: d,
-    dateWindow: a,
-    dispatch: r,
-    handleFocus(m) {
-      m.stopPropagation(), f(m.detail), o(m.detail.toDate()), setTimeout(h);
+    start: n,
+    end: n.add({ months: t - 1 })
+  };
+};
+function yt({
+  months: e,
+  locale: t,
+  focusedDate: n,
+  setFocusedDate: s
+}) {
+  const [r] = O("min"), [o] = O("max"), a = C("focusday"), f = C("change"), i = T(
+    () => z(n ?? lt(), r, o),
+    [n, r, o]
+  ), [c, u] = at(
+    () => Ot(i.toPlainYearMonth(), e)
+  ), d = (h) => {
+    const S = Mt(c.start, h.toPlainYearMonth());
+    return S >= 0 && S < e;
+  };
+  rt(() => {
+    let h = c.start;
+    if (!d(i)) {
+      const S = Mt(h, i.toPlainYearMonth()), H = Math.floor(S / e);
+      h = h.add({ months: H * e });
+    }
+    u(Ot(h, e));
+  }, [i, e]);
+  const l = U();
+  function m() {
+    l.current.querySelectorAll("calendar-month").forEach((h) => h.focus());
+  }
+  function p(h) {
+    s(h), a(v(h));
+  }
+  const y = L(Je, t), D = L(Ze, t);
+  return {
+    format: y,
+    formatVerbose: D,
+    page: c,
+    focusedDate: i,
+    dispatch: f,
+    onFocus(h) {
+      h.stopPropagation(), p(h.detail), setTimeout(m);
     },
-    setFocusedDate: f,
-    min: s,
-    max: n,
-    next: p ? () => u(a.next()) : void 0,
-    previous: D ? () => u(a.prev()) : void 0,
-    focus: h
+    min: r,
+    max: o,
+    next: o == null || !d(o) ? () => p(i.add({ months: e })) : void 0,
+    previous: r == null || !d(r) ? () => p(i.add({ months: -e })) : void 0,
+    focus: m
   };
 }
-const ln = x(
+const Xe = _(
   (e) => {
-    const [t, s] = at("value"), n = bt(e);
-    $(() => {
-      t && n.setFocusedDate(t);
-    }, [t]);
-    function o(r) {
-      s(r.detail), n.dispatch();
+    const [t, n] = O("value"), [s = t, r] = O("focusedDate"), o = yt({
+      ...e,
+      focusedDate: s,
+      setFocusedDate: r
+    });
+    function a(f) {
+      n(f.detail), o.dispatch();
     }
-    return /* @__PURE__ */ y("host", { shadowDom: !0, focus: n.focus, children: /* @__PURE__ */ y(
-      mt,
+    return /* @__PURE__ */ b("host", { shadowDom: !0, focus: o.focus, children: /* @__PURE__ */ b(
+      dt,
       {
         ...e,
-        ...n,
+        ...o,
+        type: "date",
         value: t,
-        onFocus: n.handleFocus,
-        onSelect: o
+        onSelect: a
       }
     ) });
   },
-  { props: yt, styles: pt }
+  { props: ht, styles: mt }
 );
-customElements.define("calendar-date", ln);
-const Ft = (e, t) => g.compare(e, t) < 0 ? [e, t] : [t, e], un = x(
+customElements.define("calendar-date", Xe);
+const At = (e, t) => E.compare(e, t) < 0 ? [e, t] : [t, e], Ge = _(
   (e) => {
-    const [t, s] = Ge("value"), n = bt(e), o = S("rangestart"), r = S("rangeend"), [a, c] = it();
-    $(() => {
-      t.length && !ot(n.dateWindow.focusedDate, t[0], t[1]) && n.setFocusedDate(t[1]);
-    }, [t]);
-    async function u(i) {
-      n.handleFocus(i), f(i);
+    const [t, n] = xe("value"), [s = t[0], r] = O("focusedDate"), o = yt({
+      ...e,
+      focusedDate: s,
+      setFocusedDate: r
+    }), a = C("rangestart"), f = C("rangeend"), [i, c] = at();
+    function u(p) {
+      o.onFocus(p), d(p);
     }
-    function f(i) {
-      i.stopPropagation(), c((d) => d && { ...d, second: i.detail });
+    function d(p) {
+      p.stopPropagation(), c((y) => y && { ...y, b: p.detail });
     }
-    function l(i) {
-      const d = i.detail;
-      i.stopPropagation(), a ? (s(Ft(a.first, d)), c(void 0), r(d.toDate()), n.dispatch()) : (c({ first: d, second: d }), o(d.toDate()));
+    function l(p) {
+      const y = p.detail;
+      p.stopPropagation(), i ? (n(At(i.a, y)), c(void 0), f(v(y)), o.dispatch()) : (c({ a: y, b: y }), a(v(y)));
     }
-    const h = a ? Ft(a.first, a.second) : t;
-    return /* @__PURE__ */ y("host", { shadowDom: !0, focus: n.focus, children: /* @__PURE__ */ y(
-      mt,
+    const m = i ? At(i.a, i.b) : t;
+    return /* @__PURE__ */ b("host", { shadowDom: !0, focus: o.focus, children: /* @__PURE__ */ b(
+      dt,
       {
         ...e,
-        ...n,
-        highlightedRange: h,
+        ...o,
+        type: "range",
+        value: m,
         onFocus: u,
-        onHover: f,
+        onHover: d,
         onSelect: l
       }
     ) });
   },
-  { props: yt, styles: pt }
+  { props: ht, styles: mt }
 );
-customElements.define("calendar-range", un);
-const fn = x(
+customElements.define("calendar-range", Ge);
+const Qe = _(
   (e) => {
-    const [t, s] = Qe("value"), n = bt(e);
-    function o(r) {
-      const a = r.detail;
-      if (t?.some((c) => c.equals(a)))
-        s(t.filter((c) => !c.equals(a)));
-      else {
-        const c = [...t || [], a];
-        c.sort(g.compare), s(c);
-      }
-      n.dispatch();
+    const [t, n] = Be("value"), [s = t[0], r] = O("focusedDate"), o = yt({
+      ...e,
+      focusedDate: s,
+      setFocusedDate: r
+    });
+    function a(f) {
+      const i = [...t], c = t.findIndex((u) => u.equals(f.detail));
+      c < 0 ? i.push(f.detail) : i.splice(c, 1), n(i), o.dispatch();
     }
-    return $(() => {
-      if (t.length) {
-        const r = t[t.length - 1];
-        n.setFocusedDate(r);
-      }
-    }, []), /* @__PURE__ */ y("host", { shadowDom: !0, focus: n.focus, children: /* @__PURE__ */ y(
-      mt,
+    return /* @__PURE__ */ b("host", { shadowDom: !0, focus: o.focus, children: /* @__PURE__ */ b(
+      dt,
       {
         ...e,
-        ...n,
-        selectedDates: t,
-        onFocus: n.handleFocus,
-        onSelect: o
+        ...o,
+        type: "multi",
+        value: t,
+        onSelect: a
       }
     ) });
   },
-  { props: yt, styles: pt }
+  { props: ht, styles: mt }
 );
-customElements.define("calendar-date-multiple", fn);
+customElements.define("calendar-multi", Qe);
 export {
-  ln as CalendarDate,
-  fn as CalendarDateMultiple,
-  rn as CalendarMonth,
-  un as CalendarRange,
-  g as PlainDate
+  Xe as CalendarDate,
+  Ke as CalendarMonth,
+  Qe as CalendarMulti,
+  Ge as CalendarRange
 };

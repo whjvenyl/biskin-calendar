@@ -39,6 +39,7 @@ isDateDisallowed: (date: Date) => boolean;
 min: string;
 max: string;
 locale: string | undefined;
+focusedDate: string | undefined;
 onFocusDay: (event: CustomEvent<Date>) => any;
 showOutsideDays: boolean;
 showWeekNumbers: boolean;
@@ -54,6 +55,7 @@ isDateDisallowed: (date: Date) => boolean;
 min: string;
 max: string;
 locale: string | undefined;
+focusedDate: string | undefined;
 onFocusDay: (event: CustomEvent<Date>) => any;
 showOutsideDays: boolean;
 showWeekNumbers: boolean;
@@ -65,43 +67,6 @@ onChange: (event: Event) => any;
 new (): HTMLElement;
 prototype: HTMLElement;
 }>;
-
-export declare const CalendarDateMultiple: Atomico<    {
-months: number;
-value: string;
-firstDayOfWeek: DaysOfWeek;
-isDateDisallowed: (date: Date) => boolean;
-min: string;
-max: string;
-locale: string | undefined;
-onFocusDay: (event: CustomEvent<Date>) => any;
-showOutsideDays: boolean;
-showWeekNumbers: boolean;
-disableNavigation: boolean;
-formatWeekNumbers: (weekNumber: number) => string;
-readonly: boolean;
-onChange: (event: Event) => any;
-} & {}, {
-months: number;
-value: string;
-firstDayOfWeek: DaysOfWeek;
-isDateDisallowed: (date: Date) => boolean;
-min: string;
-max: string;
-locale: string | undefined;
-onFocusDay: (event: CustomEvent<Date>) => any;
-showOutsideDays: boolean;
-showWeekNumbers: boolean;
-disableNavigation: boolean;
-formatWeekNumbers: (weekNumber: number) => string;
-readonly: boolean;
-onChange: (event: Event) => any;
-} & {}, {
-new (): HTMLElement;
-prototype: HTMLElement;
-}>;
-
-export declare type CalendarDateMultipleProps = ComponentProps<typeof CalendarDateMultiple>;
 
 export declare type CalendarDateProps = ComponentProps<typeof CalendarDate>;
 
@@ -122,6 +87,45 @@ prototype: HTMLElement;
 
 export declare type CalendarMonthProps = ComponentProps<typeof CalendarMonth>;
 
+export declare const CalendarMulti: Atomico<    {
+months: number;
+value: string;
+firstDayOfWeek: DaysOfWeek;
+isDateDisallowed: (date: Date) => boolean;
+min: string;
+max: string;
+locale: string | undefined;
+focusedDate: string | undefined;
+onFocusDay: (event: CustomEvent<Date>) => any;
+showOutsideDays: boolean;
+showWeekNumbers: boolean;
+disableNavigation: boolean;
+formatWeekNumbers: (weekNumber: number) => string;
+readonly: boolean;
+onChange: (event: Event) => any;
+} & {}, {
+months: number;
+value: string;
+firstDayOfWeek: DaysOfWeek;
+isDateDisallowed: (date: Date) => boolean;
+min: string;
+max: string;
+locale: string | undefined;
+focusedDate: string | undefined;
+onFocusDay: (event: CustomEvent<Date>) => any;
+showOutsideDays: boolean;
+showWeekNumbers: boolean;
+disableNavigation: boolean;
+formatWeekNumbers: (weekNumber: number) => string;
+readonly: boolean;
+onChange: (event: Event) => any;
+} & {}, {
+new (): HTMLElement;
+prototype: HTMLElement;
+}>;
+
+export declare type CalendarMultiProps = ComponentProps<typeof CalendarMulti>;
+
 export declare const CalendarRange: Atomico<    {
 months: number;
 value: string;
@@ -130,6 +134,7 @@ isDateDisallowed: (date: Date) => boolean;
 min: string;
 max: string;
 locale: string | undefined;
+focusedDate: string | undefined;
 onFocusDay: (event: CustomEvent<Date>) => any;
 showOutsideDays: boolean;
 showWeekNumbers: boolean;
@@ -147,6 +152,7 @@ isDateDisallowed: (date: Date) => boolean;
 min: string;
 max: string;
 locale: string | undefined;
+focusedDate: string | undefined;
 onFocusDay: (event: CustomEvent<Date>) => any;
 showOutsideDays: boolean;
 showWeekNumbers: boolean;
@@ -164,8 +170,6 @@ prototype: HTMLElement;
 export declare type CalendarRangeProps = ComponentProps<typeof CalendarRange>;
 
 declare type CheckEvent<CurrentEvent, True> = CurrentEvent extends Event ? True : never;
-
-declare type CompareResult = -1 | 0 | 1;
 
 declare type ComponentProps<T extends abstract new (...args: any) => any> = Simplify<Partial<Omit<InstanceType<T>, keyof HTMLElement | keyof AtomicoThis>>>;
 
@@ -362,14 +366,6 @@ declare interface DOMUnknown {
     [prop: string]: any;
 }
 
-declare type Duration = {
-    months: number;
-} | {
-    years: number;
-} | {
-    days: number;
-};
-
 declare type EventInit_2 = CustomEventInit<any> & {
     type: string;
     base?: typeof CustomEvent | typeof Event;
@@ -415,42 +411,6 @@ declare type JSXProxy<Props, This> = {
 };
 
 declare type Nullable<T> = NonNullable<T> | undefined | null;
-
-export declare class PlainDate {
-    readonly year: number;
-    readonly month: number;
-    readonly day: number;
-    constructor(year: number, month: number, day: number);
-    add(duration: Duration): PlainDate;
-    subtract(duration: Duration): PlainDate;
-    toString(): string;
-    toDate(): Date;
-    toPlainYearMonth(): PlainYearMonth;
-    equals(date: {
-        year: number;
-        month: number;
-        day: number;
-    }): boolean;
-    static compare(one: PlainDate, two: PlainDate): CompareResult;
-    static from(item: string | Date): PlainDate;
-    private static fromString;
-    private static fromDate;
-}
-
-declare class PlainYearMonth {
-    readonly year: number;
-    readonly month: number;
-    constructor(year: number, month: number);
-    add(duration: YearMonthDuration): PlainYearMonth;
-    subtract(duration: YearMonthDuration): PlainYearMonth;
-    toDate(): Date;
-    equals(date: {
-        year: number;
-        month: number;
-    }): boolean;
-    toPlainDate(): PlainDate;
-    static compare(one: PlainYearMonth | PlainDate, two: PlainYearMonth | PlainDate): CompareResult;
-}
 
 declare type PropsNullable<Data> = {
     [I in keyof Data]?: Nullable<Data[I]>;
@@ -662,11 +622,6 @@ declare type TypeSymbol<type extends symbol> =
 | SymbolConstructor
 | SchemaOnlyPropWrapper<SymbolConstructor, type>;
 
-declare type YearMonthDuration = {
-    months?: number;
-    years?: number;
-};
-
 export { }
 // this is just a hacky workaround to ensure the global declarations make it into the dts rollup
 // they get appended to the end of the file on vite build
@@ -674,7 +629,7 @@ declare global {
   interface HTMLElementTagNameMap {
     "calendar-month": InstanceType<typeof CalendarMonth>;
     "calendar-date": InstanceType<typeof CalendarDate>;
-    "calendar-date-multiple": InstanceType<typeof CalendarDateMultiple>;
+    "calendar-multi": InstanceType<typeof CalendarMulti>;
     "calendar-range": InstanceType<typeof CalendarRange>;
   }
 }

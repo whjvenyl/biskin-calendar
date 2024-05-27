@@ -1,6 +1,5 @@
 import { createContext } from "atomico";
-import { DateWindow } from "../utils/DateWindow.js";
-import type { PlainDate } from "../utils/temporal.js";
+import type { PlainDate, PlainYearMonth } from "../utils/temporal.js";
 import { today, type DaysOfWeek } from "../utils/date.js";
 
 interface CalendarMonthContextBase {
@@ -8,7 +7,8 @@ interface CalendarMonthContextBase {
   max?: PlainDate;
   firstDayOfWeek: DaysOfWeek;
   isDateDisallowed?: (date: Date) => boolean;
-  dateWindow: DateWindow;
+  page: { start: PlainYearMonth; end: PlainYearMonth };
+  focusedDate: PlainDate;
   showOutsideDays?: boolean;
   showWeekNumbers?: boolean;
   locale?: string;
@@ -18,28 +18,33 @@ interface CalendarMonthContextBase {
 }
 
 export interface CalendarDateContext extends CalendarMonthContextBase {
+  type: "date";
   value?: PlainDate;
 }
 
-export interface CalendarDateMultipleContext extends CalendarMonthContextBase {
-  selectedDates?: PlainDate[];
+export interface CalendarRangeContext extends CalendarMonthContextBase {
+  type: "range";
+  value: [PlainDate, PlainDate] | [];
 }
 
-export interface CalendarRangeContext extends CalendarMonthContextBase {
-  highlightedRange: [PlainDate, PlainDate] | [];
+export interface CalendarMultiContext extends CalendarMonthContextBase {
+  type: "multi";
+  value: PlainDate[];
 }
 
 export type CalendarMonthContextValue =
   | CalendarDateContext
-  | CalendarDateMultipleContext
-  | CalendarRangeContext;
+  | CalendarRangeContext
+  | CalendarMultiContext;
 
 const t = today();
 
 export const CalendarMonthContext = createContext<CalendarMonthContextValue>({
-  firstDayOfWeek: 0,
+  type: "date",
+  firstDayOfWeek: 1,
   isDateDisallowed: () => false,
-  dateWindow: new DateWindow(t.toPlainYearMonth(), { months: 1 }, t),
+  focusedDate: t,
+  page: { start: t.toPlainYearMonth(), end: t.toPlainYearMonth() },
 });
 
 customElements.define("calendar-month-ctx", CalendarMonthContext);

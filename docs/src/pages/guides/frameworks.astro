@@ -55,7 +55,7 @@ import { Code } from "astro:components";
     lang="jsx"
     code={`
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
-import "@biskin-style/calendar";
+import "cally";
 
 function useListener(ref, event, listener) {
   useEffect(() => {
@@ -131,7 +131,7 @@ export const CalendarDate = forwardRef(function CalendarDate(
     code={`
 import { useState } from "react";
 import { createRoot } from 'react-dom/client';
-import { CalendarRange, CalendarMonth } from "./calendar";
+import { CalendarRange, CalendarMonth } from "./Cally";
 
 function Picker({ value, onChange }) {
   return (
@@ -483,7 +483,7 @@ import type {
   CalendarRangeProps,
   CalendarMonthProps,
   CalendarDateProps,
-} from "@biskin-style/calendar";
+} from "cally";
 
 type MapEvents<T> = {
   [K in keyof T as K extends \`on\${infer E}\` ? \`on:\${Lowercase<E>}\` : K]: T[K];
